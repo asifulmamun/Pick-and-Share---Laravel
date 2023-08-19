@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Search Section */
+.search .features svg {
+    display: inline-block;
+}
+
+/* Search Form */
+#search_form input {
+
+    width: fill-available;
+    @apply py-5 text-lg;
+
+}
+
+/* Input Default Icon Style */
+#search_form input::-webkit-inner-spin-button,
+#search_form input::-webkit-calendar-picker-indicator {
+
+    @apply absolute top-1/2 -translate-y-1/2 left-3 text-2xl cursor-pointer text-gray-500;
+
+}
+
+/* Quick Choice */
