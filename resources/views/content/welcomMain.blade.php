@@ -19,7 +19,7 @@
         </li>
     </ul>
 
-    <form id="search_form" action="{{ route('book') }}"
+    <form id="search_form" action="{{ route('book') }}" method="GET"
         class="grid grid-cols-5 gap-3 rounded-md bg-yellow-400 py-4 px-4 shadow-md mix-blend-multiply">
         @csrf
         <div class="relative">
