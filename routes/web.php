@@ -32,3 +32,5 @@ Route::middleware([
 Route::get('/book', function(){
     return view('bookCar');
 })->name('book');
+
+Route::post('/book-car', [App\Http\Controllers\BookCarController::class, 'store'])->name('BookCarControllerStore');

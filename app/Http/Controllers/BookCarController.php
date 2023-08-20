@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\BookRequest;
+use Session;
 
 class BookCarController extends Controller
 {
@@ -34,7 +36,49 @@ class BookCarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'pickup' => ['required', 'string', 'max:255'],
+            'destination' => ['required', 'string', 'max:255'],
+            'journeyDate' => ['required', 'date'],
+            'journeyTime' => ['required', 'date_format:H:i'],
+            'personCount' => ['nullable', 'integer'],
+            'journeyDetails' => ['nullable', 'string', 'max:500'],
+        ]);
+
+        // Create a new booking request associated with the logged-in user
+        $bookingRequest = auth()->user()->bookRequests()->create($validatedData);
+        
+        // Flash a success message to the session
+        $request->session()->flash('msg', 'Your book request has been sent successfully.');
+
+        // Redirect back to the previous page
+        return redirect()->back();
+        
+        
+        // $rules = [
+        //     'pickup' => ['required', 'string', 'max:255'],
+        //     'destination' => ['required', 'string', 'max:255'],
+        //     'journeyDate' => ['required', 'date'],
+        //     'journeyTime' => ['required', 'date_format:H:i'],
+        //     'personCount' => ['nullable', 'integer'],
+        //     'journeyDetails' => ['nullable', 'string', 'max:500'],
+        // ];
+        // $this->validate($request, $rules);
+    
+        // $crud = new BookRequest();
+        // $crud->pickup = $request->pickup;
+        // $crud->destination = $request->destination;
+        // $crud->journeyDate = $request->journeyDate;
+        // $crud->journeyTime = $request->journeyTime;
+        // $crud->personCount = $request->personCount;
+        // $crud->journeyDetails = $request->journeyDetails;
+        // $crud->save();
+        // $request->session()->flash('msg', 'Your book request has been sent successfully.');
+        // return redirect()->back();
+        // // return $request->all();
     }
 
     /**
