@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Driver;
 
 class DriverController extends Controller
 {
@@ -53,8 +54,38 @@ class DriverController extends Controller
     {
         //
 
+        $user_id = auth()->id(); // Get the currently logged-in user's id
+
+        $driver = Driver::where('user_id', $user_id)->first();
+
+        if (!$driver) {
+            return redirect()->route('driver.apply'); // Replace 'driver.apply' with your actual route name
+        }
+
         
     }
+
+    // apply for driver profile activation
+    public function driverApply(){
+        
+        $user_id = auth()->id(); // Get the currently logged-in user's id
+        $driver = Driver::where('user_id', $user_id)->first();
+        
+        // if user id found in Driver column as 'user_id' then redirect to profile of derver (driver/profile)
+        if ($driver) {
+
+            return redirect()->route('driver.profile'); // Replace 'driver.apply' with your actual route name
+        
+        }else{
+
+            return view('driver.driver-profile-apply');
+
+        }
+
+
+    }
+
+ 
 
     /**
      * Show the form for editing the specified resource.
