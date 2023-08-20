@@ -8,7 +8,9 @@
         <p class="leading-relaxed text-lg">"Pick and Share" revolutionizes long-distance travel with its unique ride-sharing concept. Users request rides between districts, and drivers competitively bid with their best offers. Choose the perfect ride that fits your budget and preferences. Experience cost-effective, convenient, and personalized inter-district travel like never before.</p>
         <span class="inline-block h-1 w-10 rounded bg-yellow-500 mt-8 mb-6"></span>
         <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm"><a title="Profile" target="_blank" href="https://asifulmamun.info.bd">AL MAMUN</a></h2>
-        <p class="text-gray-500">Team Leader</p>
+        <p class="text-gray-500">Team Leader</p><br>
+        <h2 class="text-gray-900 font-medium title-font tracking-wider text-sm">MD. RAFIUL ISLAM & TASMINA YASMIN</h2>
+        <p class="text-gray-500">Team Members</p>
         </div>
     </div>
 </footer>
