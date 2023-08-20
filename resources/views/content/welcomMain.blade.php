@@ -1,3 +1,27 @@
+{{-- STEP Counter --}}
+<section class="text-gray-600 body-font">
+    <div class="container px-5 py-10 mx-auto flex flex-wrap flex-col">
+        <div class="flex mx-auto flex-wrap">
+            <a href="{{ url('/') }}"
+                class="sm:px-6 py-3 w-1/2 sm:w-auto justify-center sm:justify-start border-b-2 title-font font-medium bg-gray-100 inline-flex items-center leading-none border-indigo-500 text-indigo-500 tracking-wider rounded-t">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    class="w-5 h-5 mr-3" viewBox="0 0 24 24">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>STEP 1
+            </a>
+            <a
+                class="sm:px-6 py-3 w-1/2 sm:w-auto justify-center sm:justify-start border-b-2 title-font font-medium inline-flex items-center leading-none border-gray-200 hover:text-gray-900 tracking-wider">
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    class="w-5 h-5 mr-3" viewBox="0 0 24 24">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                </svg>STEP Final
+            </a>
+        </div>
+    </div>
+</section>
+{{-- /STEP Counter --}}
+
+
 <!-- Search Section -->
 <section class="search space-y-4 md:px-36 md:py-20 bg-no-repeat"
     style="background-image: url('./img/search_sectino_bg.svg'); background-position: 65% 100%;">
@@ -54,7 +78,8 @@
         <div class="relative">
             <span class="absolute top-1 left-12 text-xs text-gray-500 font-bold">Pickup Date</span>
             {{-- Journey Date --}}
-            <input name="journeyDate" type="date" id="search_date" class="outline-none border-none text-gray-500 rounded-lg pl-14 pt-7 pb-4 text-2xl">
+            <input name="journeyDate" type="date" id="search_date"
+                class="outline-none border-none text-gray-500 rounded-lg pl-14 pt-7 pb-4 text-2xl">
             <script>
                 const searchDateInput = document.getElementById('search_date');
 
@@ -74,7 +99,8 @@
         <div class="relative">
             <span class="absolute top-1 left-12 text-xs text-gray-500 font-bold">Chose Time</span>
             {{-- Journey Time --}}
-            <input name="journeyTime" type="time" id="search_time" class="outline-none border-none text-gray-500 rounded-lg pl-14 pt-7 pb-4 text-2xl">
+            <input name="journeyTime" type="time" id="search_time"
+                class="outline-none border-none text-gray-500 rounded-lg pl-14 pt-7 pb-4 text-2xl">
             <script>
                 const searchTimeInput = document.getElementById('search_time');
 

@@ -87,9 +87,20 @@ class BookCarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        // Get the logged-in user's ID
+        $userID = auth()->user()->id;
+
+         // Retrieve all booking requests associated with the user
+        $bookingRequests = BookRequest::where('user_id', $userID)->latest()->paginate(6); // Change '10' to your desired number of items per page
+
+        // Count the total number of booking requests
+        $totalBookingRequests = BookRequest::where('user_id', $userID)->count();
+
+        return view('dashboard', compact('bookingRequests', 'totalBookingRequests'));
+
+
     }
 
     /**

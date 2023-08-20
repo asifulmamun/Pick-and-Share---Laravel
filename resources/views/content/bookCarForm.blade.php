@@ -5,7 +5,8 @@
     @if (Session::has('msg'))
     <p class="bg-red-100 py-10 px-12">{{ Session::get('msg') }}</p>
     @endif
-        
+
+    {{-- All Error --}}
     @if ($errors->any())
     <div class="bg-red-100 py-10 px-12">
         <ul>
@@ -15,7 +16,30 @@
         </ul>
     </div>
     @endif
+    {{-- /All Error --}}
 
+    {{-- STEP Counter --}}
+    <section class="text-gray-600 body-font">
+        <div class="container px-5 py-5 mx-auto flex flex-wrap flex-col">
+            <div class="flex mx-auto flex-wrap">
+                <a href="{{ url('/') }}"
+                    class="sm:px-6 py-3 w-1/2 sm:w-auto justify-center sm:justify-start border-b-2 title-font font-medium inline-flex items-center leading-none border-gray-200 hover:text-gray-900 tracking-wider">
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" class="w-5 h-5 mr-3" viewBox="0 0 24 24">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                    </svg>STEP 1
+                </a>
+                <a
+                    class="sm:px-6 py-3 w-1/2 sm:w-auto justify-center sm:justify-start border-b-2 title-font font-medium bg-gray-100 inline-flex items-center leading-none border-indigo-500 text-indigo-500 tracking-wider rounded-t">
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" class="w-5 h-5 mr-3" viewBox="0 0 24 24">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>STEP FINAL
+                </a>
+            </div>
+        </div>
+    </section>
+    {{-- /STEP Counter --}}
 
     <section id="search_form" class="search space-y-10 md:px-36 md:py-20 bg-no-repeat"
         style="background-image: url('./img/search_sectino_bg.svg'); background-position: 65% 100%;">
@@ -32,9 +56,9 @@
             <input name="personCount" type="number" id="personCount"
                 class="outline-none border-none placeholder:gray-100 text-gray-900 text-sm rounded-lg pl-12 py-4"
                 placeholder="How Many Person, Example: 4">
-                @error('personCount')
-                <span class="text-red-500 font-bold">{{ $message }}</span>
-                @enderror
+            @error('personCount')
+            <span class="text-red-500 font-bold">{{ $message }}</span>
+            @enderror
         </div>
 
         <div class="relative">
@@ -45,9 +69,9 @@
                     {{-- Journey Details --}}
                     <textarea id="journeyDetails" name="journeyDetails" rows="3"
                         class="block w-full md:w-1/2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-                        @error('journeyDetails')
-                        <span class="text-red-500 font-bold">{{ $message }}</span>
-                        @enderror
+                    @error('journeyDetails')
+                    <span class="text-red-500 font-bold">{{ $message }}</span>
+                    @enderror
                 </div>
                 <p class="mt-3 text-sm leading-6 text-gray-600">Write a full description. Example: Your Pickup full
                     address, Destination all details. You can write all extra details which you want.</p>
@@ -66,9 +90,9 @@
             <input name="pickup" type="text" id="pickup" value="{{ $_GET['pickup'] }}"
                 class="outline-none border-none placeholder:gray-100 text-gray-900 text-sm rounded-lg pl-12 py-4"
                 placeholder="Pick Up Location">
-                @error('pickup')
-                    <span class="text-red-500 font-bold">{{ $message }}</span>
-                @enderror
+            @error('pickup')
+            <span class="text-red-500 font-bold">{{ $message }}</span>
+            @enderror
         </div>
 
         <div class="relative">
@@ -83,9 +107,9 @@
             <input name="destination" type="text" id="destination" value="{{ $_GET['destination'] }}"
                 class="outline-none border-none placeholder:gray-100 text-gray-900 text-sm rounded-lg pl-12 py-4"
                 placeholder="Destination">
-                @error('destination')
-                <span class="text-red-500 font-bold">{{ $message }}</span>
-                @enderror
+            @error('destination')
+            <span class="text-red-500 font-bold">{{ $message }}</span>
+            @enderror
         </div>
 
         <div class="relative">
@@ -93,9 +117,9 @@
             {{-- Journey Date --}}
             <input name="journeyDate" value="{{ $_GET['journeyDate'] }}" type="date" id="journeyDate"
                 class="outline-none border-none text-gray-500 rounded-lg pl-14 pt-7 pb-4 text-2xl">
-                @error('journeyDate')
-                <span class="text-red-500 font-bold">{{ $message }}</span>
-                @enderror
+            @error('journeyDate')
+            <span class="text-red-500 font-bold">{{ $message }}</span>
+            @enderror
         </div>
 
         <div class="relative">
@@ -103,9 +127,9 @@
             {{-- Journey Time --}}
             <input name="journeyTime" value="{{ $_GET['journeyTime'] }}" type="time" id="journeyTime"
                 class="outline-none border-none text-gray-500 rounded-lg pl-14 pt-7 pb-4 text-2xl">
-                @error('journeyTime')
-                <span class="text-red-500 font-bold">{{ $message }}</span>
-                @enderror
+            @error('journeyTime')
+            <span class="text-red-500 font-bold">{{ $message }}</span>
+            @enderror
         </div>
 
 

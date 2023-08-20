@@ -22,9 +22,15 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+
+    // Route::get('/dashboard', function () {
+    //     return view('dashboard');
+    // })->name('dashboard');
+
+    Route::get('/dashboard', [App\Http\Controllers\BookCarController::class, 'show'])->name('dashboard');
+
+
+
 });
 
 
@@ -33,4 +39,5 @@ Route::get('/book', function(){
     return view('bookCar');
 })->name('book');
 
+// Data SAVE by form submit
 Route::post('/book-car', [App\Http\Controllers\BookCarController::class, 'store'])->name('BookCarControllerStore');
