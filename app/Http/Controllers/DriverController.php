@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Driver;
+use Illuminate\Contracts\Session\Session;
 
 class DriverController extends Controller
 {
@@ -15,6 +16,15 @@ class DriverController extends Controller
     public function index()
     {
         //
+        // if ther driver doesn't exist any profile
+        $user_id = auth()->id(); // Get the currently logged-in user's id
+        $driver = Driver::where('user_id', $user_id)->first();
+        if (!$driver) {
+            return redirect()->route('driver.apply'); // Replace 'driver.apply' with your actual route name
+        }
+
+
+        echo Session('msg') . 'this is the dashboard index method';
     }
 
     /**
@@ -35,7 +45,32 @@ class DriverController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $user_id = auth()->id(); // Get the currently logged-in user's id
+        $driver = Driver::where('user_id', $user_id)->first();
+        // if user id found in Driver column as 'user_id' then redirect to profile of derver (driver/profile)
+        if ($driver) {
+            return redirect()->route('driver.dashboard'); // Replace 'driver.apply' with your actual route name
+        }
+
+        $data = $request->validate([
+            'present_address' => 'required|string',
+            'permanent_address' => 'required|string',
+            'license_number' => 'required|string|unique:drivers',
+            'date_of_birth' => 'required|date_format:Y-m-d',
+            'license_expire_date' => 'required|date_format:Y-m-d',
+            'nid' => 'required|integer|unique:drivers,nid',
+        ]);
+    
+        // Add the user_id and default status to the data array
+        $data['user_id'] = $user_id;
+        $data['status'] = 0;
+    
+        // Create a new Driver record with the provided data
+        Driver::create($data);
+        $request->session()->flash('msg', 'Your book request has been sent successfully.');
+        return redirect()->back()->withInput();
+        // return redirect()->route('driver.profile'); // Redirect after successful creation
     }
 
     /**
@@ -52,16 +87,15 @@ class DriverController extends Controller
     // Profile Show
     public function profileShow()
     {
-        //
-
+        // if ther driver doesn't exist any profile
         $user_id = auth()->id(); // Get the currently logged-in user's id
-
         $driver = Driver::where('user_id', $user_id)->first();
-
         if (!$driver) {
             return redirect()->route('driver.apply'); // Replace 'driver.apply' with your actual route name
         }
 
+        // if has exist profile of driver
+        echo Session('msg'). 'This is profile page';
         
     }
 
@@ -70,22 +104,17 @@ class DriverController extends Controller
         
         $user_id = auth()->id(); // Get the currently logged-in user's id
         $driver = Driver::where('user_id', $user_id)->first();
-        
         // if user id found in Driver column as 'user_id' then redirect to profile of derver (driver/profile)
         if ($driver) {
-
-            return redirect()->route('driver.profile'); // Replace 'driver.apply' with your actual route name
-        
+            return redirect()->route('driver.dashboard'); // Replace 'driver.apply' with your actual route name
         }else{
-
             return view('driver.driver-profile-apply');
-
         }
 
 
     }
 
- 
+
 
     /**
      * Show the form for editing the specified resource.

@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect;
+
+
 
 
 
@@ -42,6 +45,8 @@ Route::prefix('driver')->middleware(['auth', 'isDriver'])->group(function(){
     
     // apply for driver profile
     Route::get('apply', [App\Http\Controllers\DriverController::class, 'driverApply'])->name('driver.apply');
+    Route::post('applied', [App\Http\Controllers\DriverController::class, 'store'])->name('driver.applied')->middleware('onlyPost');
+
 
 });
 

@@ -18,49 +18,62 @@
         </div>
         <!-- text - end -->
 
+
+        {{-- All Error --}}
+        @if ($errors->any())
+        <div class="bg-red-100 py-10 px-12">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li class="font-bold">{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+        {{-- /All Error --}}
+
         <!-- form - start -->
-        <form action="" method="POST" class="mx-auto grid max-w-screen-md gap-4 sm:grid-cols-2">
+        <form action="{{ route('driver.applied') }}" method="POST" class="mx-auto grid max-w-screen-md gap-4 sm:grid-cols-2">
             @csrf
 
             {{-- Present Address --}}
             <div>
                 <label for="present_address" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Present Address*</label>
-                <input name="present_address" placeholder="Kishoreganj, Bangladesh" type="text"
+                <input name="present_address" placeholder="Kishoreganj, Bangladesh" type="text" value="{{ old('present_address') }}"
                     class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
             </div>
 
             {{-- Parmanent Address --}}
             <div>
                 <label for="permanent_address" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Parmanent Address*</label>
-                <input name="permanent_address" placeholder="Adabor, Dhaka, Bangladesh" type="text"
+                <input name="permanent_address" placeholder="Adabor, Dhaka, Bangladesh" type="text" value="{{ old('permanent_address') }}"
                     class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
             </div>
 
             {{-- License Number --}}
             <div class="sm:col-span-2">
                 <label for="license_number" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">License Number</label>
-                <input name="license_number" type="number" placeholder="NHOD1555NH"
+                <input name="license_number" type="text" placeholder="NHOD1555NH" value="{{ old('license_number') }}"
                     class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
             </div>
 
             {{-- Date of Birth --}}
             <div class="sm:col-span-2">
                 <label for="date_of_birth" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">Date of Birth*</label>
-                <input name="date_of_birth" type="date"
+                <input name="date_of_birth" type="date"  value="{{ old('date_of_birth') }}"
                     class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
             </div>
 
             {{-- License Expire Date --}}
             <div class="sm:col-span-2">
                 <label for="license_expire_date" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">License Expire Date*</label>
-                <input name="license_expire_date" type="date"
+                <input name="license_expire_date" type="date" value="{{ old('license_expire_date') }}"
                     class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
             </div>
 
             {{-- NID --}}
             <div class="sm:col-span-2">
                 <label for="nid" class="mb-2 inline-block text-sm text-gray-800 sm:text-base">NID*</label>
-                <input name="nid" type="number" placeholder="Number only: 0000000000"
+                <input name="nid" type="number" placeholder="Number only: 0000000000"  value="{{ old('nid') }}"
                     class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
             </div>
 
