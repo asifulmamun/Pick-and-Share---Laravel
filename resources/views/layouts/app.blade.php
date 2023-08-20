@@ -16,7 +16,13 @@
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         {{ $header ?? '' }}
         @if(auth()->check()) <!-- Check if the user is logged in -->
-            <p>Welcome, {{ auth()->user()->name }}! Your user ID is: {{ auth()->user()->id }}</p>
+            <p>Welcome, {{ auth()->user()->name }}!&nbsp;&nbsp;Your user ID is: {{ auth()->user()->id }}!&nbsp;&nbsp;Your role is: @if (auth()->user()->role == 2)
+                DRIVER
+            @elseif (auth()->user()->role == 1)
+                ADMIN
+            @else
+                USER
+            @endif</p>
 
         @endif
     </div>

@@ -1,5 +1,6 @@
 <x-guest-layout>
     <x-jet-authentication-card>
+        
         <x-slot name="logo">
             <img src="{{ asset('img/logo.png') }}" alt="Logo">
         </x-slot>
@@ -10,6 +11,11 @@
             <div class="mb-4 font-medium text-sm text-green-600">
                 {{ session('status') }}
             </div>
+        @endif
+
+        {{-- If has message --}}
+        @if (Session::has('msg'))
+        <p class="bg-red-100 py-10 px-12">{{ Session::get('msg') }}</p>
         @endif
 
         <form method="POST" action="{{ route('login') }}">

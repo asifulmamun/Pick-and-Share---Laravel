@@ -16,6 +16,8 @@ class BookCarController extends Controller
     public function index()
     {
         //
+
+        echo 'hi';
     }
 
     /**

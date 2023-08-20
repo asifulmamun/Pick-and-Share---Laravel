@@ -31,3 +31,18 @@ Route::get('/book', function () {
 
 // Data SAVE by form submit
 Route::post('/book-car', [App\Http\Controllers\BookCarController::class, 'store'])->name('BookCarControllerStore');
+
+
+
+// Driver
+Route::prefix('driver')->middleware(['auth', 'isDriver'])->group(function(){
+
+    Route::get('profile', [App\Http\Controllers\BookCarController::class, 'index'])->name('driver.profile');
+
+});
+
+
+// Admin
+Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function(){
+    // Route::get('dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
+});
