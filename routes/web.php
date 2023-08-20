@@ -2,20 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
 
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Route::middleware([
     'auth:sanctum',
@@ -23,21 +15,17 @@ Route::middleware([
     'verified'
 ])->group(function () {
 
-    // Route::get('/dashboard', function () {
-    //     return view('dashboard');
-    // })->name('dashboard');
-
+    // Dashboard User
     Route::get('/dashboard', [App\Http\Controllers\BookCarController::class, 'show'])->name('dashboard');
-
-
-
+    
+    
 });
 
 
 // Book A CAR
-Route::get('/book', function(){
-    return view('bookCar');
-})->name('book');
+Route::get('/book', function () {
+        return view('bookCar');
+    })->middleware('auth')->name('book'); 
 
 // Data SAVE by form submit
 Route::post('/book-car', [App\Http\Controllers\BookCarController::class, 'store'])->name('BookCarControllerStore');
