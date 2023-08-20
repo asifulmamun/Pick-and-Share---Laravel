@@ -37,7 +37,8 @@ Route::post('/book-car', [App\Http\Controllers\BookCarController::class, 'store'
 // Driver
 Route::prefix('driver')->middleware(['auth', 'isDriver'])->group(function(){
 
-    Route::get('profile', [App\Http\Controllers\BookCarController::class, 'index'])->name('driver.profile');
+    Route::get('dashboard', [App\Http\Controllers\DriverController::class, 'index'])->name('driver.dashboard');
+    Route::get('profile', [App\Http\Controllers\DriverController::class, 'profileShow'])->name('driver.profile');
 
 });
 
