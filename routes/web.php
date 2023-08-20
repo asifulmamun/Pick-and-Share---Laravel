@@ -25,7 +25,9 @@ Route::middleware([
 // Book A CAR
 Route::get('/book', function () {
         return view('bookCar');
-    })->middleware('auth')->name('book'); 
+    })
+    ->middleware('auth')
+    ->name('book');
 
 // Data SAVE by form submit
 Route::post('/book-car', [App\Http\Controllers\BookCarController::class, 'store'])->name('BookCarControllerStore');
