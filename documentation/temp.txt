@@ -1,0 +1,10 @@
+#Contract
+
+id
+book_request_id
+requster_user_id
+driver_id
+driver_request_amount
+contract_amount
+contracted_date
+status
