@@ -54,15 +54,26 @@
 
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
+            @if(auth()->user()->role == '2')
+            <span class="text-red-500 inline-block py-4">Name and Phone Number can not be possible to change, contact your Administrator.</span>
+            @endif
             <x-jet-label for="name" value="{{ __('Name') }}" />
+            @if(auth()->user()->role == '2')
+            <input value="{{ auth()->user()->name }}" name="name" type="text" disabled>
+            @else
             <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name" autocomplete="name" />
+            @endif
             <x-jet-input-error for="name" class="mt-2" />
         </div>
 
         <!-- Phone Number -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="phone_number" value="{{ __('Name') }}" />
+            @if(auth()->user()->role == '2')
+            <input value="{{ auth()->user()->phone_number }}" name="phone_number" type="text" disabled>
+            @else
             <x-jet-input id="phone_number" type="text" class="mt-1 block w-full" wire:model.defer="state.phone_number" autocomplete="phone_number" />
+            @endif
             <x-jet-input-error for="phone_number" class="mt-2" />
         </div>
 

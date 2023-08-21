@@ -90,14 +90,21 @@ class DriverController extends Controller
     {
         // if ther driver doesn't exist any profile
         $user_id = auth()->id(); // Get the currently logged-in user's id
-        $driver = Driver::where('user_id', $user_id)->first();
+        $driver = Driver::where('user_id', $user_id)
+        ->join('users', 'users.id', '=', 'drivers.user_id')
+        ->select(
+            'users.name', 'users.email', 'users.phone_number',
+            'drivers.present_address', 'drivers.permanent_address', 'drivers.license_number', 'drivers.license_expire_date', 'drivers.nid', 'drivers.date_of_birth', 'drivers.status'
+        )
+        ->first();
         if (!$driver) {
             return redirect()->route('driver.apply'); // Replace 'driver.apply' with your actual route name
         }
 
+        $user = $driver;
         // if has exist profile of driver
-        echo Session('msg'). 'This is profile page';
-        
+        return view('driver.profile', ['user' => $user]);
+
     }
 
     // apply for driver profile activation

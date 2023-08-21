@@ -47,8 +47,8 @@ Route::prefix('driver')->middleware(['auth', 'isDriver'])->group(function(){
 });
 
  // apply for driver profile
- Route::get('driver/apply', [App\Http\Controllers\DriverController::class, 'driverApply'])->name('driver.apply')->middleware('auth');
- Route::post('driver/applied', [App\Http\Controllers\DriverController::class, 'store'])->name('driver.applied')->middleware(['auth', 'onlyPost']);
+Route::get('driver/apply', [App\Http\Controllers\DriverController::class, 'driverApply'])->name('driver.apply')->middleware('auth');
+Route::post('driver/applied', [App\Http\Controllers\DriverController::class, 'store'])->name('driver.applied')->middleware(['auth', 'onlyPost']);
 
 
 // Admin
