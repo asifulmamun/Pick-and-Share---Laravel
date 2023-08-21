@@ -15,6 +15,14 @@ class CreateContractsTable extends Migration
     {
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('book_request_id')->constrained('book_requests');
+            $table->foreignId('requester_user_id')->constrained('book_requests');
+            $table->foreignId('driver_user_id')->constrained('drivers');
+            $table->decimal('driver_request_amount', 10, 2);
+            $table->decimal('contract_amount', 10, 2);
+            $table->string('currency', 3)->nullable();
+            $table->date('contracted_date');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }
