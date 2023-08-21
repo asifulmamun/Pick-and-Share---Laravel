@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 // use App\Models\User;
 use App\Models\BookRequest;
 
-class contract extends Model
+class Contract extends Model
 {
     use HasFactory;
 
