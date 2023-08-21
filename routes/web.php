@@ -42,6 +42,7 @@ Route::prefix('driver')->middleware(['auth', 'isDriver'])->group(function(){
 
     Route::get('dashboard', [App\Http\Controllers\DriverController::class, 'index'])->name('driver.dashboard');
     Route::get('profile', [App\Http\Controllers\DriverController::class, 'profileShow'])->name('driver.profile');
+    Route::post('profile-update', [App\Http\Controllers\DriverController::class, 'update'])->name('driver.profile.update')->middleware('onlyPost');
     
 
 });

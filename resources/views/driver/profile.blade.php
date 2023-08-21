@@ -11,10 +11,21 @@
     <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
         <!-- text - start -->
         <div class="mb-10 md:mb-16">
+            @if (session('msg'))
+            <h2 class="mb-4 text-center text-2xl font-bold text-red-500 md:mb-6 lg:text-3xl">{{ session('msg') }}</h2>
+            @endif
             <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">{{ $user->name }} - Profile</h2>
             <p class="mx-auto max-w-screen-md text-center text-gray-500 md:text-lg">E-mail: {{ $user->email }} | Phone: {{ $user->phone_number }}</p>
             <p class="text-center pt-14">
                 <a href="{{ route('profile.show') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">Change Profile Information</a>
+                
+                {{-- @if ()
+                    
+                @endif --}}
+
+                <a href="{{ route('profile.show') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">Change Profile Information</a>
+
+
                 <h2 class="pt-4 text-center text-red-500 font-bold text-2xl">You can only change your present address.</h2><h3 class="pt-4 text-center text-green-500 font-bold mb-10">If you need to change other's information please contact with Administrator.</h3>
             </p>
 
@@ -35,7 +46,7 @@
         {{-- /All Error --}}
         
         <!-- form - start -->
-        <form action="{{ route('driver.applied') }}" method="POST" class="mx-auto grid max-w-screen-md gap-4 sm:grid-cols-2">
+        <form action="{{ route('driver.profile.update') }}" method="POST" class="mx-auto grid max-w-screen-md gap-4 sm:grid-cols-2">
             @csrf
 
             {{-- Present Address --}}

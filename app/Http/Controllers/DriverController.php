@@ -51,7 +51,7 @@ class DriverController extends Controller
         $driver = Driver::where('user_id', $user_id)->first();
         // if user id found in Driver column as 'user_id' then redirect to profile of derver (driver/profile)
         if ($driver) {
-            return redirect()->route('driver.apply'); // Replace 'driver.apply' with your actual route name
+            return redirect()->route('driver.dashboard'); // Replace 'driver.apply' with your actual route name
         }
 
         $data = $request->validate([
@@ -146,9 +146,29 @@ class DriverController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $user_id = auth()->id(); // Get the currently logged-in user's id
+        $driver = Driver::where('user_id', $user_id)->first();
+        // without id go to for apply
+        if (!$driver) {
+            return redirect()->route('driver.profile'); // Replace 'driver.apply' with your actual route name
+        }
+
+
+        $rules = [
+            'present_address' => 'required|string',
+        ];
+        $this->validate($request, $rules);
+
+        $crud = Driver::where('user_id', $user_id)->first();
+        $crud->present_address = $request->present_address;
+        $crud->save();
+        // Session::flash('msg', 'Your information updated successfully');
+        return redirect()->back()->with('msg', 'Your information updated successfully');
+
+        // return $request->all();
+
     }
 
     /**
