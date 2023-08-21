@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Driver;
+use App\Models\User;
 use Illuminate\Contracts\Session\Session;
 
 class DriverController extends Controller
@@ -66,11 +67,19 @@ class DriverController extends Controller
         // Add the user_id and default status to the data array
         $data['user_id'] = $user_id;
         $data['status'] = 0;
+        
     
         // Create a new Driver record with the provided data
         Driver::create($data);
+
+
+        $crud = User::where('id', $user_id)->first();;
+        $crud->role = '2';
+        $crud->save();
+
         $request->session()->flash('msg', 'Your book request has been sent successfully.');
         return redirect()->back()->withInput();
+
         // return redirect()->route('driver.profile'); // Redirect after successful creation
     }
 
