@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BookRequest;
+use App\Models\Driver;
 use Session;
 
 class BookCarController extends Controller
@@ -109,10 +110,22 @@ class BookCarController extends Controller
     public function showBookingRequestDetails($id)
     {
 
-        // Retrieve data
+        // Retrieve Booking Details and user(requester) details
         $bookingRequest = BookRequest::join('users', 'users.id', '=', 'book_requests.user_id')
         ->find($id);
-        return view('showRequestDetails', compact('bookingRequest'));
+
+        // 
+        $user_id = auth()->id(); // Get the currently logged-in user's id
+        $driver = Driver::where('user_id', $user_id)
+        ->join('users', 'users.id', '=', 'drivers.user_id')
+        ->select(
+            'users.name', 'users.email', 'users.phone_number',
+            'drivers.present_address', 'drivers.permanent_address', 'drivers.license_number', 'drivers.license_expire_date', 'drivers.nid', 'drivers.date_of_birth', 'drivers.status'
+        )
+        ->first();
+
+
+        return view('showRequestDetails', compact('bookingRequest', 'driver'));
 
     }
 
