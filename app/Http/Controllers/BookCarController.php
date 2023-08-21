@@ -15,9 +15,9 @@ class BookCarController extends Controller
      */
     public function index()
     {
-        //
-
-        echo 'hi';
+       // Retrieve all booking requests associated with the user
+       $bookingRequests = BookRequest::latest()->simplePaginate(4); // Change '10' to your desired number of items per page
+       return view('showRequests', compact('bookingRequests'));
     }
 
     /**

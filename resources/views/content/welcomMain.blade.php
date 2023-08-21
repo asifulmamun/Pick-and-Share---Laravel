@@ -131,38 +131,24 @@
     <div class="col-span-5 bg-no-repeat"
         style="background-image: url('./img/quick_choice_bg.svg'); background-position: 0% 0%;">
         <h2 class="font-extrabold text-lg">Quick Choice</h2>
-
         <div class="w-fit px-6 py-3 mt-6 border border-solid rounded-2xl border-gray-500">
-            <a class="grid grid-cols-3 py-2 text-gray-600 hover:bg-yellow-100 px-2 font-semibold" href="./">
-                <span>Dhaka</span><span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                    </svg></span><span>Chittagon</span>
-            </a>
-            <a class="grid grid-cols-3 py-2 text-gray-600 hover:bg-yellow-100 px-2 font-semibold" href="./">
-                <span>Rajshahi</span><span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                    </svg></span><span>Dhaka</span>
-            </a>
-            <a class="grid grid-cols-3 py-2 text-gray-600 hover:bg-yellow-100 px-2 font-semibold" href="./">
-                <span>Cox's Bazar</span><span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                    </svg></span><span>Dhaka</span>
-            </a>
-            <a class="grid grid-cols-3 py-2 text-gray-600 hover:bg-yellow-100 px-2 font-semibold" href="./">
-                <span>Dhaka</span><span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                    </svg></span><span>Mymensing</span>
-            </a>
+            {{-- Requests --}}
+            @if($bookingRequests->count() > 0)
+                @foreach($bookingRequests as $bookingRequest)
+                    <a class="grid grid-cols-3 py-2 text-gray-600 hover:bg-yellow-100 px-2 font-semibold" href="{{ url('booking-request-list/?id=') . $bookingRequest->id}}">
+                    <span>{{ $bookingRequest->pickup }}</span><span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+                        </svg></span><span>{{ $bookingRequest->destination }}</span>
+                    </a>
+                @endforeach
+                <br>
+                {{ $bookingRequests->links() }}
+                <center><a class="inline-block mx-auto bg-red-400 hover:bg-blue-400 text-white px-4 py-2 mt-3" href="{{ route('showRequests') }}">Show More</a></center>
+            @endif
+            {{-- /Requests --}}
         </div>
-
     </div>
     <!-- /Quick Choice -->
 

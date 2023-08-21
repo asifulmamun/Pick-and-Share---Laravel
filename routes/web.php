@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\Redirect;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/show-requests', [App\Http\Controllers\BookCarController::class, 'index'])->name('showRequests');
+
 
 
 Route::middleware([
