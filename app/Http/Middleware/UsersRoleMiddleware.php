@@ -30,7 +30,7 @@ class UsersRoleMiddleware
 
             } else{
 
-                return redirect('/login')->with('msg', 'You are not a Driver');
+                return redirect('/dashboard')->with('msg', 'You are not a Driver');
 
             }
 

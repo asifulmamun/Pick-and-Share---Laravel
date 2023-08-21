@@ -9,6 +9,16 @@
 {{-- Main Content --}}
 @section('main')
 
+
+{{-- msg --}}
+@if (session('msg'))
+<h1 class="text-red-500 font-bold pt-24 pb-3 text-center text-2xl">{{ session('msg') }}</h1>
+<h1 class="font-bold my-5 py-20 text-center text-2xl"><a class="py-2 px-3 text-white bg-red-400 hover:bg-blue-400" href="{{ route('driver.apply') }}">Apply</a> for driver profile.</h1>
+@endif
+{{-- /msg --}}
+
+
+
 {{-- Booking Results --}}
 @if($bookingRequests->count() > 0)
 <section class="text-gray-600 body-font">
@@ -18,6 +28,8 @@
         <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">You have requested for({{ $totalBookingRequests }}) destination.</h2>
     </div>
     {{-- /Counter Requested --}}
+
+        <h1 class="font-bold my-5 py-5 text-center text-2xl"><a class="py-2 px-3 text-white bg-red-400 hover:bg-blue-400" href="{{ route('driver.apply') }}">Apply</a> for driver profile.</h1>
 
     <div class="container px-5 mx-auto">
         <div class="grid grid-cols-12">

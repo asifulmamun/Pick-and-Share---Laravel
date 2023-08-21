@@ -23,8 +23,9 @@ class DriverController extends Controller
             return redirect()->route('driver.apply'); // Replace 'driver.apply' with your actual route name
         }
 
-
-        echo Session('msg') . 'this is the dashboard index method';
+        
+        echo 'You have already for apply driver profile';
+        echo session('msg') . 'this is the dashboard index method';
     }
 
     /**
@@ -50,7 +51,7 @@ class DriverController extends Controller
         $driver = Driver::where('user_id', $user_id)->first();
         // if user id found in Driver column as 'user_id' then redirect to profile of derver (driver/profile)
         if ($driver) {
-            return redirect()->route('driver.dashboard'); // Replace 'driver.apply' with your actual route name
+            return redirect()->route('driver.apply'); // Replace 'driver.apply' with your actual route name
         }
 
         $data = $request->validate([
@@ -105,10 +106,14 @@ class DriverController extends Controller
         $user_id = auth()->id(); // Get the currently logged-in user's id
         $driver = Driver::where('user_id', $user_id)->first();
         // if user id found in Driver column as 'user_id' then redirect to profile of derver (driver/profile)
-        if ($driver) {
-            return redirect()->route('driver.dashboard'); // Replace 'driver.apply' with your actual route name
-        }else{
-            return view('driver.driver-profile-apply');
+        if(auth()->check()){
+            if ($driver) {
+                return redirect()->route('driver.dashboard');
+            }else{
+                return view('driver.driver-profile-apply');
+            }
+        } else{
+            return redirect()->route('login');
         }
 
 
