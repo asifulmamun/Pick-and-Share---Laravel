@@ -20,10 +20,13 @@
             @if (auth()->user()->role == 1)
                 ADMIN
             @elseif (auth()->user()->role == 2)
-                DRIVER
+                DRIVER&nbsp;|&nbsp;<a class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition" href="{{ route('driver.profile') }}">Driver Profile</a>&nbsp;&nbsp;<a class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition" href="{{ route('dashboard') }}">Main Dashboard</a>
             @else   
                 USER
-            @endif</p>
+            @endif
+            
+
+        </p>
         @endif
     </div>
 </section>
