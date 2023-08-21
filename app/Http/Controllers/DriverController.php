@@ -110,7 +110,7 @@ class DriverController extends Controller
             if ($driver) {
                 return redirect()->route('driver.dashboard');
             }else{
-                return view('driver.driver-profile-apply');
+                return view('driver.profile-apply');
             }
         } else{
             return redirect()->route('login');
