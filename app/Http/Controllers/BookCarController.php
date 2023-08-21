@@ -104,7 +104,15 @@ class BookCarController extends Controller
         $totalBookingRequests = BookRequest::where('user_id', $userID)->count();
 
         return view('dashboard', compact('bookingRequests', 'totalBookingRequests'));
+    }
 
+    public function showBookingRequestDetails($id)
+    {
+
+        // Retrieve data
+        $bookingRequest = BookRequest::join('users', 'users.id', '=', 'book_requests.user_id')
+        ->find($id);
+        return view('showRequestDetails', compact('bookingRequest'));
 
     }
 

@@ -135,7 +135,7 @@
             {{-- Requests --}}
             @if($bookingRequests->count() > 0)
                 @foreach($bookingRequests as $bookingRequest)
-                    <a class="grid grid-cols-3 py-2 text-gray-600 hover:bg-yellow-100 px-2 font-semibold" href="{{ url('booking-request-list/?id=') . $bookingRequest->id}}">
+                    <a class="grid grid-cols-3 py-2 text-gray-600 hover:bg-yellow-100 px-2 font-semibold" href="{{ route('showBookingRequestDetails', ['id' => $bookingRequest->id])}}">
                     <span>{{ $bookingRequest->pickup }}</span><span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -145,7 +145,7 @@
                 @endforeach
                 <br>
                 {{ $bookingRequests->links() }}
-                <center><a class="inline-block mx-auto bg-red-400 hover:bg-blue-400 text-white px-4 py-2 mt-3" href="{{ route('showRequests') }}">Show More</a></center>
+                <center><a class="inline-block mx-auto bg-red-400 hover:bg-blue-400 text-white px-4 py-2 mt-3" href="{{ route('showBookingRequests') }}">Show More</a></center>
             @endif
             {{-- /Requests --}}
         </div>

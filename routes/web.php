@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Redirect;
 //     return view('welcome');
 // });
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/show-requests', [App\Http\Controllers\BookCarController::class, 'index'])->name('showRequests');
+Route::get('/show-requests', [App\Http\Controllers\BookCarController::class, 'index'])->name('showBookingRequests');
+Route::get('/booking-details/{id}', [App\Http\Controllers\BookCarController::class, 'showBookingRequestDetails'])->name('showBookingRequestDetails');
 
 
 

@@ -11,12 +11,14 @@ class BookRequest extends Model
 
     // Define the fillable attributes
     protected $fillable = [
+        'user_id',
         'pickup',
         'destination',
         'journeyDate',
         'journeyTime',
         'personCount',
         'journeyDetails',
+        'created_at',
     ];
 
     // Define the relationships
