@@ -155,13 +155,12 @@ class DriverController extends Controller
             return redirect()->route('driver.profile'); // Replace 'driver.apply' with your actual route name
         }
 
-
         $rules = [
             'present_address' => 'required|string',
         ];
         $this->validate($request, $rules);
 
-        $crud = Driver::where('user_id', $user_id)->first();
+        $crud = $driver;
         $crud->present_address = $request->present_address;
         $crud->save();
         // Session::flash('msg', 'Your information updated successfully');
@@ -169,6 +168,22 @@ class DriverController extends Controller
 
         // return $request->all();
 
+    }
+
+    // Status Request change active or inactive
+    public function updateProfileStatusRequest(Request $request){
+        $user_id = auth()->id(); // Get the currently logged-in user's id
+        $driver = Driver::where('user_id', $user_id)->first();
+        // without id go to for apply
+        if (!$driver) {
+            return redirect()->route('driver.profile'); // Replace 'driver.apply' with your actual route name
+        }
+
+        $crud = $driver;
+        $crud->status = '2';
+        $crud->save();
+        // Session::flash('msg', 'Your information updated successfully');
+        return redirect()->back()->with('msg', 'Your request for Account activation has been sent successfully');
     }
 
     /**
