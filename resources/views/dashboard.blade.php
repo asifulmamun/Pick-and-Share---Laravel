@@ -18,7 +18,6 @@
 {{-- /msg --}}
 
 
-
 {{-- Booking Results --}}
 @if($bookingRequests->count() > 0)
 <section class="text-gray-600 body-font">
@@ -29,7 +28,12 @@
     </div>
     {{-- /Counter Requested --}}
 
+    @auth
+        @if (auth()->user()->role == 0)
         <h1 class="font-bold my-5 py-5 text-center text-2xl"><a class="py-2 px-3 text-white bg-red-400 hover:bg-blue-400" href="{{ route('driver.apply') }}">Apply</a> for driver profile.</h1>
+        @endif
+    @endauth
+
 
     <div class="container px-5 mx-auto">
         <div class="grid grid-cols-12">
@@ -169,7 +173,7 @@
     </div>
 </section>
 @else
-<p>You have no booking requests.</p>
+<p>No Requests Available.</p>
 @endif
 {{-- /Booking Results --}}
 
