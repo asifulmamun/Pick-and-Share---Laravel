@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Contract;
 use App\Models\BookRequest;
 use App\Models\Driver;
-use App\Models\User;
 
 class ContractsController extends Controller
 {
@@ -15,9 +14,7 @@ class ContractsController extends Controller
     public function createContract(Request $request)
     {
 
-
-
-
+        // Retrive Driver Info
         $driver_id = auth()->id(); // Get the currently logged-in user's id
         $driver = Driver::where('user_id', $driver_id)->where('status', 1)
         ->select('user_id')
@@ -33,12 +30,10 @@ class ContractsController extends Controller
         ->select('user_id')
         ->first();
 
+        // Saving the request
         $rules = [
             'book_request_id' => 'required|exists:book_requests,id',
-            // 'requester_user_id' => 'required|exists:users,id',
-            // 'driver_user_id' => 'required|exists:drivers,user_id',
             'driver_request_amount' => 'required|numeric',
-            // 'contract_amount' => 'required|numeric',
         ];
         $this->validate($request, $rules); // This will automatically handle validation
     
@@ -47,8 +42,6 @@ class ContractsController extends Controller
         $crud->requester_user_id = $bookRequesterUserID->user_id;
         $crud->driver_user_id = $driver_id;
         $crud->driver_request_amount = $request->driver_request_amount;
-        $crud->contract_amount = 0.00;
-        // $crud->status = false;
         $crud->save();
         return redirect()->back()->with('msg', 'Your contract request has been sent successfully');
     }
