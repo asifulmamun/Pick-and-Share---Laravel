@@ -112,11 +112,23 @@ class BookCarController extends Controller
 
         // Retrieve Booking Details and user(requester) details
         $bookingRequest = BookRequest::join('users', 'users.id', '=', 'book_requests.user_id')
+        ->select(
+            'users.name', 'users.email', 'users.phone_number',
+            'book_requests.id',
+            'book_requests.user_id',
+            'book_requests.pickup',
+            'book_requests.destination', 
+            'book_requests.journeyDate', 
+            'book_requests.journeyTime',
+            'book_requests.personCount',
+            'book_requests.journeyDetails',
+            'book_requests.created_at',
+        )
         ->find($id);
 
-        // 
-        $user_id = auth()->id(); // Get the currently logged-in user's id
-        $driver = Driver::where('user_id', $user_id)
+        // Driver Details
+        $driver_id = auth()->id(); // Get the currently logged-in user's id
+        $driver = Driver::where('user_id', $driver_id)
         ->join('users', 'users.id', '=', 'drivers.user_id')
         ->select(
             'users.name', 'users.email', 'users.phone_number',

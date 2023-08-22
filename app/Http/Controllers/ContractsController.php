@@ -22,28 +22,33 @@ class ContractsController extends Controller
         }
 
 
+        // Retrieve Booking Details and user(requester) details
+        $bookRequesterUserID = BookRequest::where('id', $request->book_request_id)
+        ->select('user_id')
+        ->first();
+
 
         $rules = [
             'book_request_id' => 'required|exists:book_requests,id',
             'requester_user_id' => 'required|exists:users,id',
             'driver_user_id' => 'required|exists:drivers,user_id',
             'driver_request_amount' => 'required|numeric',
-            'contract_amount' => 'required|numeric',
-            'currency' => 'nullable|string|max:3', // Adjust the validation rules as needed
-            'contracted_date' => 'nullable|date',
-            'status' => 'required|boolean',
+            // 'contract_amount' => 'required|numeric',
+            // 'currency' => 'nullable|string|max:3', // Adjust the validation rules as needed
+            // 'contracted_date' => 'nullable|date',
+            // 'status' => 'required|boolean',
         ];
 
         $this->validate($request, $rules);
 
         $crud = new Contract();
-        $crud->book_request_id = $request->booking_id;
-        $crud->requester_user_id = $request->requester_user_id;
+        $crud->book_request_id = $request->book_request_id;
+        $crud->requester_user_id = $bookRequesterUserID;
         $crud->driver_user_id = $driver_id;
         $crud->driver_request_amount = $request->driver_request_amount;
-        $crud->currency = 'BDT';
-        $crud->contracted_date = 'null';
-        $crud->status = '0';
+        // $crud->currency = 'BDT';
+        // $crud->contracted_date = 'null';
+        // $crud->status = '0';
 
         $crud->save();
 
