@@ -134,17 +134,11 @@
                     {{-- APPLY --}}
                     <form action="{{ route('driver.applyContract') }}" method="POST" class="col-span-4">
                         @csrf
-                        
-                        <input type="text" name="book_request_id" value="{{ $bookingRequest->id }}">
-                        @error('book_request_id')
-                        <span class="text-red-500 font-bold">{{ $message }}</span>
-                        @enderror
-
+                        <input type="hidden" name="book_request_id" value="{{ $bookingRequest->id }}">
                         <input name="driver_request_amount" placeholder="Amount" type="text">
                         @error('driver_request_amount')
                         <span class="text-red-500 font-bold">{{ $message }}</span>
                         @enderror
-
                         <button type="submit" class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">Apply</button>
                     </form>
                     {{-- /APPLY --}}
