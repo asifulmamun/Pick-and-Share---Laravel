@@ -43,8 +43,6 @@ class BookCarController extends Controller
      */
     public function store(Request $request)
     {
-
-        
         // Validate the incoming data
         $validatedData = $request->validate([
             'pickup' => ['required', 'string', 'max:255'],
@@ -63,29 +61,6 @@ class BookCarController extends Controller
 
         // Redirect back to the previous page
         return redirect()->back();
-        
-        
-        // $rules = [
-        //     'pickup' => ['required', 'string', 'max:255'],
-        //     'destination' => ['required', 'string', 'max:255'],
-        //     'journeyDate' => ['required', 'date'],
-        //     'journeyTime' => ['required', 'date_format:H:i'],
-        //     'personCount' => ['nullable', 'integer'],
-        //     'journeyDetails' => ['nullable', 'string', 'max:500'],
-        // ];
-        // $this->validate($request, $rules);
-    
-        // $crud = new BookRequest();
-        // $crud->pickup = $request->pickup;
-        // $crud->destination = $request->destination;
-        // $crud->journeyDate = $request->journeyDate;
-        // $crud->journeyTime = $request->journeyTime;
-        // $crud->personCount = $request->personCount;
-        // $crud->journeyDetails = $request->journeyDetails;
-        // $crud->save();
-        // $request->session()->flash('msg', 'Your book request has been sent successfully.');
-        // return redirect()->back();
-        // // return $request->all();
     }
 
     /**
@@ -137,6 +112,15 @@ class BookCarController extends Controller
         )
         ->first();
 
+        // All Contracts Details for this request
+        $allContracts = Contract::where('book_request_id', $id)
+        ->join('users', 'users.id', '=', 'contracts.driver_user_id')
+        ->select(
+            'users.name', 'users.email', 'users.phone_number',
+            'contracts.driver_user_id', 'contracts.driver_request_amount'
+        )
+        ->get();
+
 
         // Retrive Contract Details
         $contract = Contract::where('book_request_id', $id)
@@ -144,7 +128,7 @@ class BookCarController extends Controller
         ->select('requester_user_id', 'driver_user_id', 'driver_request_amount')
         ->first();
 
-        return view('showRequestDetails', compact('bookingRequest', 'driver', 'contract'));
+        return view('showRequestDetails', compact('bookingRequest', 'driver', 'allContracts', 'contract'));
 
     }
 
