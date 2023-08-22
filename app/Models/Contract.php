@@ -4,13 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-// use App\Models\User;
-use App\Models\BookRequest;
 
 class Contract extends Model
 {
     use HasFactory;
-
 
     protected $fillable = [
         'book_request_id',
@@ -23,20 +20,36 @@ class Contract extends Model
         'status',
     ];
 
-    // Relation
-    public function bookRequest()
-    {
-        return $this->belongsTo(BookRequest::class, 'book_request_id');
-    }
+    // public function bookRequest()
+    // {
+    //     return $this->belongsTo(BookRequest::class, 'book_request_id');
+    // }
 
-    public function requester()
-    {
-        return $this->belongsTo(BookRequest::class, 'requester_user_id', 'user_id');
-    }
+    // public function requester()
+    // {
+    //     return $this->belongsTo(User::class, 'requester_user_id');
+    // }
 
-    public function driver()
-    {
-        return $this->belongsTo(Driver::class, 'driver_user_id', 'user_id');
-    }
+    // public function driver()
+    // {
+    //     return $this->belongsTo(User::class, 'driver_user_id');
+    // }
 
+
+       // Relation
+    //    public function bookRequest()
+    //    {
+    //        return $this->belongsTo(BookRequest::class, 'book_request_id');
+    //    }
+   
+    //    public function requester()
+    //    {
+    //        return $this->belongsTo(BookRequest::class, 'requester_user_id', 'user_id');
+    //    }
+   
+    //    public function driver()
+    //    {
+    //        return $this->belongsTo(Driver::class, 'driver_user_id', 'user_id');
+    //    }
+   
 }
