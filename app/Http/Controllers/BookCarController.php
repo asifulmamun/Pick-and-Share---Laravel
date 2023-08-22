@@ -19,16 +19,6 @@ class BookCarController extends Controller
     public function index()
     {
 
-                // // All Contracts Details for this request
-                // $allContracts = Contract::where('book_request_id', $id)
-                // ->join('users', 'users.id', '=', 'contracts.driver_user_id')
-                // ->select(
-                //     'users.name', 'users.email', 'users.phone_number',
-                //     'contracts.driver_user_id', 'contracts.driver_request_amount'
-                // )
-                // ->get();
-
-
         $bookingRequests = BookRequest::select(
             'book_requests.id',
             'book_requests.pickup',
@@ -96,12 +86,24 @@ class BookCarController extends Controller
         $userID = auth()->user()->id;
 
          // Retrieve all booking requests associated with the user
-        $bookingRequests = BookRequest::where('user_id', $userID)->latest()->paginate(6); // Change '10' to your desired number of items per page
+        $bookingRequests = BookRequest::where('user_id', $userID)
+        ->select(
+            'book_requests.id',
+            'book_requests.pickup',
+            'book_requests.destination',
+            'book_requests.journeyDate',
+            'book_requests.journeyTime',
+            'book_requests.personCount',
+            DB::raw('COUNT(contracts.id) as contract_count')
+        )
+        ->leftJoin('contracts', 'contracts.book_request_id', '=', 'book_requests.id')
+        ->groupBy('book_requests.id')
+        ->orderByDesc('book_requests.id') // Order by id in descending order
+        ->paginate(9);
+        
+    
 
-        // Count the total number of booking requests
-        $totalBookingRequests = BookRequest::where('user_id', $userID)->count();
-
-        return view('dashboard', compact('bookingRequests', 'totalBookingRequests'));
+        return view('dashboard', compact('bookingRequests'));
     }
 
     public function showBookingRequestDetails($id)
