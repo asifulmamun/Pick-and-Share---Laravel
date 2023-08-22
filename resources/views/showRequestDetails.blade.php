@@ -171,7 +171,7 @@
     {{-- Contracts --}}
     <div class="bg-gray-100 p-4">
         <div class="flex items-center justify-center mb-6">
-            <h2 class="text-2xl font-bold text-red-400">Total Requested: {{ $allContracts->count() }}</h2>
+            <h2 class="text-2xl font-bold text-red-400">Total Applied: {{ $allContracts->count() }}</h2>
         </div>
         <ul class="grid grid-cols-1 gap-4">
             @foreach($allContracts as $contract)
@@ -188,7 +188,9 @@
                             <div>Phone: {{ $contract->phone_number }}</div>
                         </div>
                     </div>
+                    @if ($bookingRequest->user_id == auth()->user()->id )
                     <button class="bg-red-400 hover:bg-blue-400 text-white px-4 py-2 rounded">Accept</button>
+                    @endif
                 </li>
             @endforeach
         </ul>
