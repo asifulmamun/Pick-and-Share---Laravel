@@ -67,7 +67,7 @@
 
 {{-- Apply JOB/BID --}}
 
-@if ($driver->status ?? '')
+@if (isset($driver))
 
     {{-- DRIVER --}}
     @if ($bookingRequest->user_id == auth()->user()->id )
@@ -84,25 +84,50 @@
                 </div>
             </div>
         </div>
+    @elseif ($driver->status == '0')
+        <div class="bg-white py-6 sm:py-8 lg:py-12">
+            <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
+                <div class="flex flex-col items-center justify-between gap-4 rounded-lg bg-gray-100 p-4 sm:flex-row md:p-8">
+                    <div>
+                        <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, {{ $driver->name; }}! You cann't apply for this contract.</h2>
+                        <p class="text-gray-600">Your profile is not activate yet (Inacvite). Go to for apply from your driver profile.</p>
+                    </div>
+    
+                    <a href="{{ route('driver.profile') }}"
+                        class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">Request for Activation</a>
+                </div>
+            </div>
+        </div>
     @elseif ($driver->status == '2')
         <div class="bg-white py-6 sm:py-8 lg:py-12">
             <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
                 <div class="flex flex-col items-center justify-between gap-4 rounded-lg bg-gray-100 p-4 sm:flex-row md:p-8">
                     <div>
-                        <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, {{ $driver->name; }}! You can apply for this contract.</h2>
-                        <p class="text-gray-600">If the requester interest then ther requester will make a contract with you.
-                            You will be found this in your Dashboard. </p>
+                        <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, {{ $driver->name; }}! You cann't apply for this contract.</h2>
+                        <p class="text-gray-600">Your profile is not activate yet (Pending). Go to for apply from your driver profile.</p>
                     </div>
 
-                    <a href="#"
-                        class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">Start
-                        now</a>
+                    <a href="{{ route('driver.profile') }}"
+                        class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">Request for Activation</a>
+                </div>
+            </div>
+        </div>
+    @elseif ($driver->status == '1')
+        <div class="bg-white py-6 sm:py-8 lg:py-12">
+            <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
+                <div class="flex flex-col items-center justify-between gap-4 rounded-lg bg-gray-100 p-4 sm:flex-row md:p-8">
+                    <div>
+                        <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, {{ $driver->name; }}! You can apply for this contract.</h2>
+                        <p class="text-gray-600">Enter your bid amount and apply.</p>
+                    </div>
+
+                    <a href="{{ route('driver.profile') }}"
+                        class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">Apply</a>
                 </div>
             </div>
         </div>
     @endif
     {{-- /DRIVER --}}
-
 @else
 {{-- GUEST/LOGGED USER --}}
     <div class="bg-white py-6 sm:py-8 lg:py-12">

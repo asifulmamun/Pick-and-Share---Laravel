@@ -1,3 +1,16 @@
+ROLE
+    // Users == 0
+    // Admin == 1
+    // Driver == 2
+        ---------------STATUS OF DRIVER
+        // inactive == 0
+        // active == 1
+        // pending == 2
+
+
+
+
+
 #Contract
 
 id
@@ -8,3 +21,5 @@ driver_request_amount
 contract_amount
 contracted_date
 status
+
+

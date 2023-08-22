@@ -55,7 +55,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'onlyPost' => \App\Http\Middleware\OnlyPost::class,
-        'isDriver' => \App\Http\Middleware\UsersRoleMiddleware::class,
+        'isDriver' => \App\Http\Middleware\DriversRoleMiddleware::class,
         'isAdmin' => \App\Http\Middleware\AdminRoleMiddleware::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,

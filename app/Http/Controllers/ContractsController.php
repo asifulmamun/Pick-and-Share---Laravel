@@ -12,7 +12,7 @@ class ContractsController extends Controller
 {
     //
 
-    public function update(Request $request, $booking_id)
+    public function update(Request $request)
     {
         $driver_id = auth()->id(); // Get the currently logged-in user's id
         $driver = Driver::where('user_id', $driver_id)->where('status', 2)->first();
@@ -37,13 +37,13 @@ class ContractsController extends Controller
         $this->validate($request, $rules);
 
         $crud = new Contract();
-        $crud->book_request_id = $booking_id;
+        $crud->book_request_id = $request->booking_id;
         $crud->requester_user_id = $request->requester_user_id;
         $crud->driver_user_id = $driver_id;
         $crud->driver_request_amount = $request->driver_request_amount;
         $crud->currency = 'BDT';
         $crud->contracted_date = 'null';
-        $crud->statis = '0';
+        $crud->status = '0';
 
         $crud->save();
 

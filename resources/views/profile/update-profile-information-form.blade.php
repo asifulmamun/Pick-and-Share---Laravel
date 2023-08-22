@@ -1,3 +1,6 @@
+{{-- Apply for driver profile --}}
+@include('component.applyForDriverProfile')
+
 <x-jet-form-section submit="updateProfileInformation">
     <x-slot name="title">
         {{ __('Profile Information') }}
@@ -52,6 +55,8 @@
             </div>
         @endif
 
+
+        
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
             @if(auth()->user()->role == '2')

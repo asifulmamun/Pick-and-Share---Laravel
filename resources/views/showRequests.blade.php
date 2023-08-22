@@ -18,11 +18,8 @@
     </div>
     {{-- /Counter Requested --}}
 
-    @auth
-        @if (auth()->user()->role == 0)
-        <h1 class="font-bold my-5 py-5 text-center text-2xl"><a class="py-2 px-3 text-white bg-red-400 hover:bg-blue-400" href="{{ route('driver.apply') }}">Apply</a> for driver profile.</h1>
-        @endif
-    @endauth
+    {{-- Apply for driver profile --}}
+    @include('component.applyForDriverProfile')
 
 
     <div class="container px-5 mx-auto">

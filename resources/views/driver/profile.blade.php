@@ -11,9 +11,9 @@
     <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
         <!-- text - start -->
         <div class="mb-10 md:mb-16">
-            @if (session('msg'))
-                <h2 class="mb-4 text-center text-2xl font-bold text-red-500 md:mb-6 lg:text-3xl">{{ session('msg') }}</h2>
-            @endif
+            {{-- msg --}}
+            @include('component.errorMsg')
+            {{-- /msg --}}
             <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">{{ $user->name }} - Profile</h2>
             <p class="mx-auto max-w-screen-md text-center text-gray-500 md:text-lg">E-mail: {{ $user->email }} | Phone: {{ $user->phone_number }}</p>
 

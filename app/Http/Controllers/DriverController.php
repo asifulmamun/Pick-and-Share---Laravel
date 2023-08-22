@@ -26,7 +26,7 @@ class DriverController extends Controller
 
         
         echo 'You have already for apply driver profile';
-        echo session('msg') . 'this is the dashboard index method';
+        echo  'this is the dashboard index method';
     }
 
     /**

@@ -11,10 +11,7 @@
 
 
 {{-- msg --}}
-@if (session('msg'))
-<h1 class="text-red-500 font-bold pt-24 pb-3 text-center text-2xl">{{ session('msg') }}</h1>
-<h1 class="font-bold my-5 py-20 text-center text-2xl"><a class="py-2 px-3 text-white bg-red-400 hover:bg-blue-400" href="{{ route('driver.apply') }}">Apply</a> for driver profile.</h1>
-@endif
+@include('component.errorMsg')
 {{-- /msg --}}
 
 
@@ -28,12 +25,9 @@
     </div>
     {{-- /Counter Requested --}}
 
-    @auth
-        @if (auth()->user()->role == 0)
-        <h1 class="font-bold my-5 py-5 text-center text-2xl"><a class="py-2 px-3 text-white bg-red-400 hover:bg-blue-400" href="{{ route('driver.apply') }}">Apply</a> for driver profile.</h1>
-        @endif
-    @endauth
 
+    {{-- Apply for driver profile --}}
+    @include('component.applyForDriverProfile')
 
     <div class="container px-5 mx-auto">
         <div class="grid grid-cols-12">
@@ -173,7 +167,10 @@
     </div>
 </section>
 @else
-<p>No Requests Available.</p>
+    {{-- Apply for driver profile --}}
+    @include('component.applyForDriverProfile')
+    
+    <p>No Requests Available.</p>
 @endif
 {{-- /Booking Results --}}
 
