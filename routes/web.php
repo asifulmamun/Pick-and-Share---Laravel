@@ -49,6 +49,9 @@ Route::prefix('driver')->middleware(['auth', 'isDriver'])->group(function(){
     Route::post('profile-update', [App\Http\Controllers\DriverController::class, 'update'])->name('driver.profile.update')->middleware('onlyPost');
     Route::get('profile-status-request', [App\Http\Controllers\DriverController::class, 'updateProfileStatusRequest'])->name('driver.profile.update.status.request');
     
+    // apply job/bid
+    Route::post('apply-contract', [App\Http\Controllers\ContractsController::class, 'createContract'])->name('driver.applyContract');
+    
 
 });
 

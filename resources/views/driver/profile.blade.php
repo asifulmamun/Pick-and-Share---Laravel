@@ -12,7 +12,7 @@
         <!-- text - start -->
         <div class="mb-10 md:mb-16">
             {{-- msg --}}
-            @include('component.errorMsg')
+            @include('component.sesionMsg')
             {{-- /msg --}}
             <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">{{ $user->name }} - Profile</h2>
             <p class="mx-auto max-w-screen-md text-center text-gray-500 md:text-lg">E-mail: {{ $user->email }} | Phone: {{ $user->phone_number }}</p>

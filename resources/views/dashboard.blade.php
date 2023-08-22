@@ -11,7 +11,7 @@
 
 
 {{-- msg --}}
-@include('component.errorMsg')
+@include('component.sesionMsg')
 {{-- /msg --}}
 
 

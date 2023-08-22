@@ -14,7 +14,7 @@ class Contract extends Model
 
     protected $fillable = [
         'book_request_id',
-        'requster_user_id',
+        'requester_user_id',
         'driver_user_id',
         'driver_request_amount',
         'contract_amount',
