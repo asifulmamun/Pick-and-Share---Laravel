@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\BookRequest;
 use App\Models\Driver;
+use App\Models\Contract;
 use Session;
 
 class BookCarController extends Controller
@@ -137,7 +138,13 @@ class BookCarController extends Controller
         ->first();
 
 
-        return view('showRequestDetails', compact('bookingRequest', 'driver'));
+        // Retrive Contract Details
+        $contract = Contract::where('book_request_id', $id)
+        ->where('driver_user_id', $driver_id)
+        ->select('requester_user_id', 'driver_user_id', 'driver_request_amount')
+        ->first();
+
+        return view('showRequestDetails', compact('bookingRequest', 'driver', 'contract'));
 
     }
 

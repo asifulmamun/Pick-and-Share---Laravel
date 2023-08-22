@@ -98,7 +98,7 @@
             <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
                 <div class="flex flex-col items-center justify-between gap-4 rounded-lg bg-gray-100 p-4 sm:flex-row md:p-8">
                     <div>
-                        <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, {{ $driver->name; }}! You cann't apply for this contract.</h2>
+                        <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, <span class="col-span-4 text-red-400 font-bold">{{ $driver->name; }}!</span>&nbsp;You cann't apply for this contract.</h2>
                         <p class="text-gray-600">Your profile is not activate yet (Inacvite). Go to for apply from your driver profile.</p>
                     </div>
     
@@ -112,7 +112,7 @@
             <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
                 <div class="flex flex-col items-center justify-between gap-4 rounded-lg bg-gray-100 p-4 sm:flex-row md:p-8">
                     <div>
-                        <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, {{ $driver->name; }}! You cann't apply for this contract.</h2>
+                        <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, <span class="col-span-4 text-red-400 font-bold">{{ $driver->name; }}!</span>&nbsp;You cann't apply for this contract.</h2>
                         <p class="text-gray-600">Your profile is not activate yet (Pending). Go to for apply from your driver profile.</p>
                     </div>
 
@@ -127,10 +127,13 @@
                 <div class="grid grid-cols-10 sm:flex-row p-4 md:p-8 items-center justify-between gap-4 rounded-lg bg-gray-100">
                     
                     <div class="col-span-6">
-                        <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, {{ $driver->name; }}! You can apply for this contract.</h2>
+                        <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, <span class="col-span-4 text-red-400 font-bold">{{ $driver->name; }}!</span>&nbsp;You can apply for this contract.</h2>
                         <p class="text-gray-600">Enter your bid amount and apply. If your bid amount preferable for user/requester then the requester will contract with you.</p>
                     </div>
 
+                    @if (isset($contract->driver_request_amount))
+                    <b class="col-span-4 text-red-400 font-bold text-xl">You have already applied for {{ $contract->driver_request_amount }} amount.</b>
+                    @else
                     {{-- APPLY --}}
                     <form action="{{ route('driver.applyContract') }}" method="POST" class="col-span-4">
                         @csrf
@@ -142,6 +145,7 @@
                         <button type="submit" class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">Apply</button>
                     </form>
                     {{-- /APPLY --}}
+                    @endif 
                 </div>
             </div>
         </div>
