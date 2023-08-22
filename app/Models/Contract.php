@@ -20,36 +20,18 @@ class Contract extends Model
         'status',
     ];
 
-    // public function bookRequest()
-    // {
-    //     return $this->belongsTo(BookRequest::class, 'book_request_id');
-    // }
+    public function bookRequest()
+    {
+        return $this->belongsTo(BookRequest::class, 'book_request_id');
+    }
 
-    // public function requester()
-    // {
-    //     return $this->belongsTo(User::class, 'requester_user_id');
-    // }
+    public function requester()
+    {
+        return $this->belongsTo(User::class, 'requester_user_id');
+    }
 
-    // public function driver()
-    // {
-    //     return $this->belongsTo(User::class, 'driver_user_id');
-    // }
-
-
-       // Relation
-    //    public function bookRequest()
-    //    {
-    //        return $this->belongsTo(BookRequest::class, 'book_request_id');
-    //    }
-   
-    //    public function requester()
-    //    {
-    //        return $this->belongsTo(BookRequest::class, 'requester_user_id', 'user_id');
-    //    }
-   
-    //    public function driver()
-    //    {
-    //        return $this->belongsTo(Driver::class, 'driver_user_id', 'user_id');
-    //    }
-   
+    public function driver()
+    {
+        return $this->belongsTo(User::class, 'driver_user_id');
+    }
 }
