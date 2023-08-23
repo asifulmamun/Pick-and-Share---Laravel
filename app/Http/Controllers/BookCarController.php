@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 use App\Models\BookRequest;
 use App\Models\Driver;
@@ -125,6 +126,11 @@ class BookCarController extends Controller
         )
         ->find($id);
 
+        // if result not found or booking request are not available
+        if(!isset($bookingRequest)){
+            return Redirect::route('home')->with('msg', 'There are no requests available.');
+        }
+
         // Driver Details
         $driver_id = auth()->id(); // Get the currently logged-in user's id
         $driver = Driver::where('user_id', $driver_id)
@@ -140,18 +146,23 @@ class BookCarController extends Controller
         ->join('users', 'users.id', '=', 'contracts.driver_user_id')
         ->select(
             'users.name', 'users.email', 'users.phone_number',
-            'contracts.driver_user_id', 'contracts.driver_request_amount', 'contracts.proposal'
+            'contracts.id', 'contracts.driver_user_id', 'contracts.driver_request_amount', 'contracts.proposal'
         )
-        ->get();
-
+        ->groupBy('contracts.id')
+        ->orderByDesc('contracts.id') // Order by contracts.id in descending order
+        ->paginate(10);
+        
+        // total contracts count
+        $allContractsCount = Contract::count();
 
         // Retrive Contract Details
         $contract = Contract::where('book_request_id', $id)
         ->where('driver_user_id', $driver_id)
-        ->select('requester_user_id', 'driver_user_id', 'driver_request_amount')
+        ->select('id', 'requester_user_id', 'driver_user_id', 'driver_request_amount')
         ->first();
 
-        return view('showRequestDetails', compact('bookingRequest', 'driver', 'allContracts', 'contract'));
+
+        return view('showRequestDetails', compact('bookingRequest', 'driver', 'allContracts', 'allContractsCount', 'contract'));
 
     }
 

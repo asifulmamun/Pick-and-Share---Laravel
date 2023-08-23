@@ -2,20 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\BookCarController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DriverController;
 
 
+// Public
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/show-requests', [BookCarController::class, 'index'])->name('showBookingRequests');
+Route::get('/booking-details/{id}', [BookCarController::class, 'showBookingRequestDetails'])->name('showBookingRequestDetails');
 
 
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/show-requests', [App\Http\Controllers\BookCarController::class, 'index'])->name('showBookingRequests');
-Route::get('/booking-details/{id}', [App\Http\Controllers\BookCarController::class, 'showBookingRequestDetails'])->name('showBookingRequestDetails');
-
-
-
+// Logged users
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -23,31 +21,28 @@ Route::middleware([
 ])->group(function () {
 
     // Dashboard User
-    Route::get('/dashboard', [App\Http\Controllers\BookCarController::class, 'show'])->name('dashboard');
+    Route::get('/dashboard', [BookCarController::class, 'show'])->name('dashboard');
     
+    // Data SAVE by form submit
+    Route::post('/book-car', [BookCarController::class, 'store'])->name('BookCarControllerStore');
+
     
+    // Book A CAR
+    Route::get('/book', function () { return view('bookCar');})->name('book');
 });
 
 
-// Book A CAR
-Route::get('/book', function () {
-        return view('bookCar');
-    })
-    ->middleware('auth')
-    ->name('book');
 
-// Data SAVE by form submit
-Route::post('/book-car', [App\Http\Controllers\BookCarController::class, 'store'])->name('BookCarControllerStore');
 
 
 
 // Driver
 Route::prefix('driver')->middleware(['auth', 'isDriver'])->group(function(){
 
-    Route::get('dashboard', [App\Http\Controllers\DriverController::class, 'index'])->name('driver.dashboard');
-    Route::get('profile', [App\Http\Controllers\DriverController::class, 'profileShow'])->name('driver.profile');
-    Route::post('profile-update', [App\Http\Controllers\DriverController::class, 'update'])->name('driver.profile.update')->middleware('onlyPost');
-    Route::get('profile-status-request', [App\Http\Controllers\DriverController::class, 'updateProfileStatusRequest'])->name('driver.profile.update.status.request');
+    Route::get('dashboard', [DriverController::class, 'index'])->name('driver.dashboard');
+    Route::get('profile', [DriverController::class, 'profileShow'])->name('driver.profile');
+    Route::post('profile-update', [DriverController::class, 'update'])->name('driver.profile.update')->middleware('onlyPost');
+    Route::get('profile-status-request', [DriverController::class, 'updateProfileStatusRequest'])->name('driver.profile.update.status.request');
     
     // apply job/bid
     Route::post('apply-contract', [App\Http\Controllers\ContractsController::class, 'createContract'])->name('driver.applyContract');
@@ -56,8 +51,8 @@ Route::prefix('driver')->middleware(['auth', 'isDriver'])->group(function(){
 });
 
  // apply for driver profile
-Route::get('driver/apply', [App\Http\Controllers\DriverController::class, 'driverApply'])->name('driver.apply')->middleware('auth');
-Route::post('driver/applied', [App\Http\Controllers\DriverController::class, 'store'])->name('driver.applied')->middleware(['auth', 'onlyPost']);
+Route::get('driver/apply', [DriverController::class, 'driverApply'])->name('driver.apply')->middleware('auth');
+Route::post('driver/applied', [DriverController::class, 'store'])->name('driver.applied')->middleware(['auth', 'onlyPost']);
 
 
 // Admin

@@ -173,7 +173,7 @@
     {{-- Contracts --}}
     <div class="bg-gray-100 p-4">
         <div class="flex items-center justify-center mb-6">
-            <h2 class="text-2xl font-bold text-red-400">Total Applied: {{ $allContracts->count() }}</h2>
+            <h2 class="text-2xl font-bold text-red-400">Applied Results: {{ $allContracts->count() . ' of ' . $allContractsCount }}</h2>
         </div>
         <ul class="grid grid-cols-1 gap-4">
             @foreach($allContracts as $allContract)
@@ -201,10 +201,15 @@
                     @endif
                 </li>
             @endforeach
+            {{ $allContracts->links() }}
         </ul>
     </div>
     {{-- /Contracts --}}
 
+<div class="text-center my-8">
+    <a href="{{ route('showBookingRequestDetails', ['id' => $bookingRequest->id-1]) }}" class="btn bg-red-500 text-white font-bold py-2 px-4 rounded">Previous</a>
+    <a href="{{ route('showBookingRequestDetails', ['id' => $bookingRequest->id+1]) }}" class="btn bg-blue-500 text-white font-bold py-2 px-4 rounded">Next</a>&nbsp;&nbsp;
+</div>
 
 @endsection
 {{-- /Main Content --}}

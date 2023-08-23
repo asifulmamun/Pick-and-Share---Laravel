@@ -1,10 +1,8 @@
 <form action="{{ route('BookCarControllerStore') }}" method="POST" class="px-20 py-20 bg-yellow-50">
     @csrf
 
-    {{-- If has message - From BookCarController --}}
-    @if (Session::has('msg'))
-    <p class="bg-red-100 py-10 px-12">{{ Session::get('msg') }}</p>
-    @endif
+    {{-- msg --}}
+    @include('component.sesionMsg')
 
     {{-- All Error --}}
     @if ($errors->any())
