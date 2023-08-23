@@ -184,7 +184,15 @@
                         </div>
                         <div>
                             <div class="font-semibold text-red-400">{{ $allContract->name }}</div>
-                            <div>Request Amount: <span class="font-bold text-red-400">{{ $allContract->driver_request_amount }} TAKA</span></div>
+                            <small>Contract ID: {{ $allContract->id }}</small>
+                            <div>Request Amount:
+                                @if ($allContract->contract_amount > 0)
+                                    <span class="font-bold text-red-400">{{ $allContract->contract_amount }}</span>
+                                    &nbsp;<del>{{ $allContract->driver_request_amount }}</del>&nbsp;TAKA
+                                @else
+                                    <span class="font-bold text-red-400">{{ $allContract->driver_request_amount }} TAKA</span>
+                                @endif
+                            </div>
                             <div>Driver ID: {{ $allContract->driver_user_id }}</div>
                             <div>Email: {{ $allContract->email }}</div>
                             <div>Phone: {{ $allContract->phone_number }}</div>

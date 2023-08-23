@@ -124,7 +124,7 @@ class BookCarController extends Controller
         ->join('users', 'users.id', '=', 'contracts.driver_user_id')
         ->select(
             'users.name', 'users.email', 'users.phone_number',
-            'contracts.id', 'contracts.driver_user_id', 'contracts.driver_request_amount', 'contracts.proposal'
+            'contracts.id', 'contracts.driver_user_id', 'contracts.driver_request_amount', 'contracts.proposal', 'contracts.contract_amount'
         )
         ->groupBy('contracts.id')
         ->orderByDesc('contracts.id') // Order by contracts.id in descending order
@@ -137,7 +137,7 @@ class BookCarController extends Controller
         // Retrive Contract Details
         $contract = Contract::where('book_request_id', $id)
         ->where('driver_user_id', $driver_id)
-        ->select('id', 'requester_user_id', 'driver_user_id', 'driver_request_amount')
+        ->select('id', 'requester_user_id', 'driver_user_id', 'driver_request_amount',)
         ->first();
 
 
