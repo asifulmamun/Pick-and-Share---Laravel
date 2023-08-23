@@ -134,6 +134,8 @@
                         <form action="{{ route('driver.applyContract') }}" method="POST" class="col-span-4">
                             @csrf
                             <input type="hidden" name="book_request_id" value="{{ $bookingRequest->id }}">
+                            <label class="block font-bold text-gray-700" for="proposal">Proposal Details:</label>
+                            <textarea name="proposal" id="proposal" cols="30" rows="5" placeholder="Hello, I am interested for ride with you and my proposal amount are given also.. etc..">Hello, I am interested for ride with you and my proposal amount are given also.</textarea>
                             <input name="driver_request_amount" placeholder="Amount" type="text">
                             @error('driver_request_amount')
                             <span class="text-red-500 font-bold">{{ $message }}</span>
@@ -174,22 +176,28 @@
             <h2 class="text-2xl font-bold text-red-400">Total Applied: {{ $allContracts->count() }}</h2>
         </div>
         <ul class="grid grid-cols-1 gap-4">
-            @foreach($allContracts as $contract)
+            @foreach($allContracts as $allContract)
                 <li class="bg-white p-4 shadow rounded flex items-center justify-between">
                     <div class="flex items-center space-x-4">
                         <div class="w-12 h-12 mr-6">
-                            <img class="w-full h-full rounded-full" src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($contract->email))) }}?s=200" alt="{{ $contract->name }}">
+                            <img class="w-full h-full rounded-full" src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($allContract->email))) }}?s=200" alt="{{ $allContract->name }}">
                         </div>
                         <div>
-                            <div class="font-semibold text-red-400">{{ $contract->name }}</div>
-                            <div>Request Amount: <span class="font-bold text-red-400">{{ $contract->driver_request_amount }} TAKA</span></div>
-                            <div>Driver ID: {{ $contract->driver_user_id }}</div>
-                            <div>Email: {{ $contract->email }}</div>
-                            <div>Phone: {{ $contract->phone_number }}</div>
+                            <div class="font-semibold text-red-400">{{ $allContract->name }}</div>
+                            <div>Request Amount: <span class="font-bold text-red-400">{{ $allContract->driver_request_amount }} TAKA</span></div>
+                            <div>Driver ID: {{ $allContract->driver_user_id }}</div>
+                            <div>Email: {{ $allContract->email }}</div>
+                            <div>Phone: {{ $allContract->phone_number }}</div>
                         </div>
                     </div>
+
+                    {{-- Requester/Proposal Sender Will show this --}}
+                    @if ($bookingRequest->user_id == auth()->user()->id OR $allContract->driver_user_id == auth()->user()->id )
+                        <div>{{ $allContract->proposal }}</div>
+                    @endif
+
                     @if ($bookingRequest->user_id == auth()->user()->id )
-                    <button class="bg-red-400 hover:bg-blue-400 text-white px-4 py-2 rounded">Accept</button>
+                        <button class="bg-red-400 hover:bg-blue-400 text-white px-4 py-2 rounded">Accept</button>
                     @endif
                 </li>
             @endforeach

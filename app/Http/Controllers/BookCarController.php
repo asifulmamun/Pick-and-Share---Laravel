@@ -140,7 +140,7 @@ class BookCarController extends Controller
         ->join('users', 'users.id', '=', 'contracts.driver_user_id')
         ->select(
             'users.name', 'users.email', 'users.phone_number',
-            'contracts.driver_user_id', 'contracts.driver_request_amount'
+            'contracts.driver_user_id', 'contracts.driver_request_amount', 'contracts.proposal'
         )
         ->get();
 

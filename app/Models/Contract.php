@@ -18,6 +18,7 @@ class Contract extends Model
         'currency',
         'contracted_date',
         'status',
+        'proposal',
     ];
 
     public function bookRequest()

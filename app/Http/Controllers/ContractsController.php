@@ -44,6 +44,7 @@ class ContractsController extends Controller
             $rules = [
                 'book_request_id' => 'required|exists:book_requests,id',
                 'driver_request_amount' => 'required|numeric',
+                'proposal' => 'nullable|string',
             ];
             $this->validate($request, $rules); // This will automatically handle validation
         
@@ -52,6 +53,7 @@ class ContractsController extends Controller
             $crud->requester_user_id = $bookRequesterUserID->user_id;
             $crud->driver_user_id = $driver_id;
             $crud->driver_request_amount = $request->driver_request_amount;
+            $crud->proposal = $request->proposal;
             $crud->save();
             return redirect()->back()->with('msg', 'Your contract request has been sent successfully');
         }else{
