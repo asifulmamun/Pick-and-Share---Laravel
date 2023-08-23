@@ -12,11 +12,6 @@ use Session;
 
 class BookCarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
 
@@ -37,22 +32,11 @@ class BookCarController extends Controller
         return view('showRequests', compact('bookingRequests'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         // Validate the incoming data
@@ -75,12 +59,6 @@ class BookCarController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show()
     {
         // Get the logged-in user's ID
@@ -167,35 +145,46 @@ class BookCarController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function bookingReqAcceptByRequester(Request $request)
     {
-        //
+        // VAR
+        $bookingID = $request->bookingID;
+        $driverID = $request->driverID;
+        $loggedUserId = auth()->id();
+
+        // Checking Booking Info and (This Booking Requested By LOGGED USER or NOT)
+        $booking = BookRequest::where('id', $bookingID)
+        ->where('user_id', $loggedUserId)
+        ->select('id', 'user_id')
+        ->first();
+
+        if($booking->id == $bookingID){
+            
+            // checking Driver was sended job req or not
+            $contractInfo = Contract::
+            where('book_request_id', $booking->id)
+            ->where('requester_user_id', $loggedUserId)
+            ->where('driver_user_id', $driverID)
+            ->select('id', 'driver_user_id', 'driver_request_amount')
+            ->first();
+
+
+            // Update the contracted_id field
+            $bookRequest = BookRequest::findOrFail($bookingID);
+            $bookRequest->contracted_id = $contractInfo->id;
+            $bookRequest->save();
+            return redirect()->back()->with('msg', 'Contract Requst sended successfully, for ' . $contractInfo->driver_request_amount . ' TAKA, Contracted ID: ' . $contractInfo->id . ', Driver ID: ' . $contractInfo->driver_user_id);
+        }
+
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //

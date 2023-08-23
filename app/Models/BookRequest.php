@@ -18,6 +18,7 @@ class BookRequest extends Model
         'journeyTime',
         'personCount',
         'journeyDetails',
+        'contracted_id',
         'created_at',
     ];
 

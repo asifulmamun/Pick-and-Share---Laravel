@@ -20,15 +20,20 @@ Route::middleware([
     'verified'
 ])->group(function () {
 
+    
+    
     // Dashboard User
     Route::get('/dashboard', [BookCarController::class, 'show'])->name('dashboard');
     
     // Data SAVE by form submit
     Route::post('/book-car', [BookCarController::class, 'store'])->name('BookCarControllerStore');
-
+    
     
     // Book A CAR
     Route::get('/book', function () { return view('bookCar');})->name('book');
+
+    // Booking Req Accept
+    Route::post('/booking-req-accept', [BookCarController::class, 'bookingReqAcceptByRequester'])->name('bookingReqAcceptByRequester');
 });
 
 
@@ -47,9 +52,7 @@ Route::prefix('driver')->middleware(['auth', 'isDriver'])->group(function(){
     // apply job/bid
     Route::post('apply-contract', [App\Http\Controllers\ContractsController::class, 'createContract'])->name('driver.applyContract');
     
-
 });
-
  // apply for driver profile
 Route::get('driver/apply', [DriverController::class, 'driverApply'])->name('driver.apply')->middleware('auth');
 Route::post('driver/applied', [DriverController::class, 'store'])->name('driver.applied')->middleware(['auth', 'onlyPost']);

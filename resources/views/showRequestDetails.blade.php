@@ -200,7 +200,12 @@
 
                         {{-- Request Accept BTN --}}
                         @if ($bookingRequest->user_id == auth()->user()->id )
-                        <button class="bg-red-400 hover:bg-blue-400 text-white px-4 py-2 rounded">Accept</button>
+                            <form action="{{ route('bookingReqAcceptByRequester') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="bookingID" value="{{ $bookingRequest->id }}">
+                                <input type="hidden" name="driverID" value="{{ $allContract->driver_user_id }}">
+                                <button type="submit" class="bg-red-400 hover:bg-blue-400 text-white px-4 py-2 rounded">Agree</button>
+                            </form>
                         @endif
                         {{-- /Request Accept BTN --}}
                     @endauth
