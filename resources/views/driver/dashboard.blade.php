@@ -68,8 +68,14 @@
     </div>
 </div>
 {{-- /JOB LISTS --}}
-<pre>
+
+{{-- <pre>
 {{ var_dump($contracts) }}
+</pre> --}}
+
+@foreach ($contracts as $allContracts)
+    {{ $allContracts->book_request_id }}
+@endforeach
 
 @endsection
 {{-- /Main Content --}}
