@@ -8,112 +8,11 @@ ROLE
         // pending == 2
 
 
+CONTRACTS
+    status - column
+    // 0 = Not Response
+    // 2 = Pending
+    // 1 = Accept/Contractd
 
-DB
-Schema::create('contracts', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('book_request_id')->constrained('book_requests');
-            $table->foreignId('requester_user_id')->constrained('book_requests');
-            $table->foreignId('driver_user_id')->constrained('drivers');
-            $table->decimal('driver_request_amount', 10, 2);
-            $table->decimal('contract_amount', 10, 2);
-            $table->string('currency', 3)->nullable();
-            $table->date('contracted_date');
-            $table->boolean('status')->default(0);
-            $table->timestamps();
-        });
-
-
-
-Model
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-// use App\Models\User;
-use App\Models\BookRequest;
-
-
-   use HasFactory;
-
-
-    protected $fillable = [
-        'book_request_id',
-        'requester_user_id',
-        'driver_user_id',
-        'driver_request_amount',
-        'contract_amount',
-        'currency',
-        'contracted_date',
-        'status',
-    ];
-
-    // Relation
-    public function bookRequest()
-    {
-        return $this->belongsTo(BookRequest::class, 'book_request_id');
-    }
-
-    public function requester()
-    {
-        return $this->belongsTo(BookRequest::class, 'requester_user_id', 'user_id');
-    }
-
-    public function driver()
-    {
-        return $this->belongsTo(Driver::class, 'driver_user_id', 'user_id');
-    }
-
-
-
-
-
-
-Controller
-        $driver_id = auth()->id(); // Get the currently logged-in user's id
-        $driver = Driver::where('user_id', $driver_id)->where('status', 1)->first();
-        // without id go to for apply   
-        if (!$driver) {
-            return redirect()->route('driver.profile'); // Replace 'driver.apply' with your actual route name
-        }
-
-        // Retrieve Booking Details and user(requester) details
-        $bookRequesterUserID = BookRequest::where('id', $request->book_request_id)
-        ->select('user_id')
-        ->first();
-
-        // return $request->book_request_id;
-        // return $request->all();
-        // print_r($driver->user_id);
-        // print_r($bookRequesterUserID->user_id);
-
-        $rules = [
-            'book_request_id' => 'required|exists:book_requests,id',
-            'requester_user_id' => 'required|exists:users,id',
-            'driver_user_id' => 'required|exists:drivers,user_id',
-            'driver_request_amount' => 'required|numeric',
-            'contract_amount' => 'required|numeric',
-            // 'currency' => 'nullable|string|max:3', // Adjust the validation rules as needed
-            // 'contracted_date' => 'nullable|date',
-            // 'status' => 'required|boolean',
-        ];
-    
-        $this->validate($request, $rules); // This will automatically handle validation
-    
-        // ... (existing code)
-    
-        $crud = new Contract();
-
-        $crud->book_request_id = $request->book_request_id;
-        $crud->requester_user_id = $bookRequesterUserID->user_id;
-        $crud->driver_user_id = $driver_id;
-        $crud->driver_request_amount = $request->driver_request_amount;
-        $crud->contract_amount = 0;
-            // $crud->currency = 'BDT';
-            // $crud->contracted_date = 'null';
-            // $crud->status = '0';
-
-            $crud->save();
-
-            return redirect()->back()->with('msg', 'Your contract request has been sent successfully');
 
 
