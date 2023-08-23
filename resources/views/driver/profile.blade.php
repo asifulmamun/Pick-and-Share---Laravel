@@ -14,6 +14,20 @@
             {{-- msg --}}
             @include('component.sesionMsg')
             {{-- /msg --}}
+
+            {{-- Profile Picture --}}
+            <div class="relative group h-24 w-24 block mx-auto my-4">
+                <a href="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($user->email))) }}?s=1024" target="_blank" class="group-hover:opacity-75 transition-opacity">
+                    <img class="w-full h-full" src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($user->email))) }}?s=200" alt="{{ $user->name }}" class="w-32 h-32 rounded-full">
+                </a>
+                <div class="hidden group-hover:block absolute -right-30 -top-30 transform bg-gray-800 text-white py-2 px-4 rounded-lg">
+                    <a href="https://gravatar.com/" class="block mx-auto mb-2 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700">
+                        Change Image
+                    </a>
+                </div>
+            </div>
+            {{-- /Profile Picture --}}
+
             <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">{{ $user->name }} - Profile</h2>
             <p class="mx-auto max-w-screen-md text-center text-gray-500 md:text-lg">E-mail: {{ $user->email }} | Phone: {{ $user->phone_number }}</p>
 
