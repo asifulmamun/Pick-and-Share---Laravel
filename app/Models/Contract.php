@@ -34,4 +34,10 @@ class Contract extends Model
     {
         return $this->belongsTo(User::class, 'driver_user_id');
     }
+
+    // // contract.id relation book_requests.contracted_id
+    // public function book_request()
+    // {
+    //     return $this->belongsTo(BookRequest::class, 'book_request_id');
+    // }
 }

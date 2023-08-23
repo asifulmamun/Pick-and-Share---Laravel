@@ -26,4 +26,15 @@ class BookRequest extends Model
     {
         return $this->belongsTo(User::class);
     }
+   
+    // contract.id relation book_requests.contracted_id
+    // public function contracts()
+    // {
+    //     return $this->belongsTo(Contracts::class, 'contructed_id');
+    // }
+
+    // public function contract()
+    // {
+    //     return $this->hasOne('App\Models\Contract');
+    // }
 }
