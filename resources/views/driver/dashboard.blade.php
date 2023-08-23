@@ -63,6 +63,7 @@
                 </div>
             </li>
             @endforeach
+            {{ $activeContracts->links() }}
             <!-- Repeat other list items here -->
         </ul>
     </div>
@@ -99,6 +100,7 @@
                 </div>
             </li>
             @endforeach
+            {{ $pendingContracts->links() }}
             <!-- Repeat other list items here -->
         </ul>
     </div>
@@ -125,6 +127,7 @@
                 </div>
             </li>
             @endforeach
+            {{ $noContracts->links() }}
             <!-- Repeat other list items here -->
         </ul>
     </div>
@@ -132,9 +135,7 @@
 </section>
 {{-- /JOB LISTS --}}
 
-{{-- <pre>
-{{ var_dump($contracts) }}
-</pre> --}}
+
 
 
 @endsection
