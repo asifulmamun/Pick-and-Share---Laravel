@@ -153,7 +153,8 @@ class BookCarController extends Controller
         ->paginate(10);
         
         // total contracts count
-        $allContractsCount = Contract::count();
+        $allContractsCount = Contract::where('book_request_id', $id)
+        ->count();
 
         // Retrive Contract Details
         $contract = Contract::where('book_request_id', $id)
