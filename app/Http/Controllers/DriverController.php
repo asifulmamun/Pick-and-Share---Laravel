@@ -24,6 +24,40 @@ class DriverController extends Controller
         $loggedInUserId = auth()->user()->id;
 
 
+
+        // Active
+        $activeContracts = Contract::where('driver_user_id', $loggedInUserId)
+        ->where('status', 1)
+        ->leftJoin('users', 'users.id', '=', 'contracts.requester_user_id')
+        ->leftJoin('book_requests', function ($join) {
+            $join->on('book_requests.user_id', '=', 'contracts.requester_user_id')
+                ->whereColumn('book_requests.contracted_id', '=', 'contracts.id');
+        })
+        ->select(
+            // users table
+            'users.name',
+            'users.phone_number',
+            'users.email',
+
+            // book_requests table
+            'book_requests.pickup',
+            'book_requests.destination',
+            'book_requests.journeyDate',
+            'book_requests.journeyTime',
+            'book_requests.personCount',
+            'book_requests.journeyDetails',
+
+            // contracts table
+            'contracts.id',
+            'contracts.book_request_id',
+            'contracts.driver_request_amount',
+        )
+        ->paginate(6);
+
+
+
+
+        // Pending
         $pendingContracts = Contract::where('driver_user_id', $loggedInUserId)
         ->where('status', 2)
         ->leftJoin('users', 'users.id', '=', 'contracts.requester_user_id')
@@ -32,12 +66,12 @@ class DriverController extends Controller
                 ->whereColumn('book_requests.contracted_id', '=', 'contracts.id');
         })
         ->select(
-            'contracts.id',
-
+            // users table
             'users.name',
             'users.phone_number',
             'users.email',
 
+            // book_requests table
             'book_requests.pickup',
             'book_requests.destination',
             'book_requests.journeyDate',
@@ -45,17 +79,48 @@ class DriverController extends Controller
             'book_requests.personCount',
             'book_requests.journeyDetails',
 
-
+            // contracts table
+            'contracts.id',
             'contracts.book_request_id',
             'contracts.driver_request_amount',
-
-            
-
         )
-        ->paginate(9);
+        ->paginate(6);
+
+
+
+
+        // No Response
+        $noContracts = Contract::where('driver_user_id', $loggedInUserId)
+        ->where('status', 0)
+        ->leftJoin('users', 'users.id', '=', 'contracts.requester_user_id')
+        ->leftJoin('book_requests', function ($join) {
+            $join->on('book_requests.user_id', '=', 'contracts.requester_user_id')
+                ->whereColumn('book_requests.contracted_id', '=', 'contracts.id');
+        })
+        ->select(
+            // users table
+            'users.name',
+            'users.phone_number',
+            'users.email',
+
+            // book_requests table
+            'book_requests.pickup',
+            'book_requests.destination',
+            'book_requests.journeyDate',
+            'book_requests.journeyTime',
+            'book_requests.personCount',
+            'book_requests.journeyDetails',
+
+            // contracts table
+            'contracts.id',
+            'contracts.book_request_id',
+            'contracts.driver_request_amount',
+        )
+        ->paginate(6);
+
 
         
-        return view('driver.dashboard', compact('pendingContracts'));
+        return view('driver.dashboard', compact('activeContracts', 'pendingContracts', 'noContracts'));
     }
 
     public function create()

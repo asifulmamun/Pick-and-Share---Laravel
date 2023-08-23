@@ -44,21 +44,19 @@
         <h2 class="text-2xl mb-4 border-b border-red-400 text-red-400 font-extrabold">Contracted</h2>
         <ul class="space-y-4">
             <!-- Repeat this list item for each request -->
-            @foreach ($pendingContracts as $pendingContract)
+            @foreach ($activeContracts as $activeContract)
             <li class="flex items-start space-x-4 border-b border-gray-300 py-8">
-                <a class="w-12 h-12 rounded-full"  href="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($pendingContract->email))) }}?s=1024"><img src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($pendingContract->email))) }}?s=200" alt="{{ $pendingContract->name }}" class=""> </a>
+                <a class="w-12 h-12 rounded-full"  href="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($activeContract->email))) }}?s=1024"><img src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($activeContract->email))) }}?s=200" alt="{{ $activeContract->name }}" class=""> </a>
                 <div class="flex-grow">
                     <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-semibold">{{ $pendingContract->name }}</h3>
-                        <button class="bg-red-400 hover:bg-red-600 text-white px-3 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400">Accept</button>
+                        <h3 class="text-lg font-semibold">{{ $activeContract->name }}</h3>
                     </div>
-                    <small>Contract ID: {{ $pendingContract->id }}</small>
-                    <br><small class="text-gray-500">Phone: {{ $pendingContract->phone_number }}</small>
-                    <br><small class="text-gray-500">Email: {{ $pendingContract->email }}</small>
-                    <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-2">{{ $pendingContract->driver_request_amount }} TAKA</span>
-                    <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-1">{{ $pendingContract->journeyDate }} || {{ $pendingContract->journeyTime }}</span>
-                    <p class="font-bold py-2"><a class="text-blue-400" href="{{ route('showBookingRequestDetails', [$pendingContract->book_request_id]) }}">{{ $pendingContract->pickup }} >> {{ $pendingContract->destination }}</a></p>
-                    <p class="text-gray-500">Journey Description: {{ $pendingContract->journeyDetails }}</p>
+                    <small>Contract ID: {{ $activeContract->id }}</small>
+                    <br><small class="text-gray-500">Phone: {{ $activeContract->phone_number }}</small>
+                    <br><small class="text-gray-500">Email: {{ $activeContract->email }}</small>
+                    <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-2">{{ $activeContract->driver_request_amount }} TAKA</span>
+                    <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-1">{{ $activeContract->journeyDate }} || {{ $activeContract->journeyTime }}</span>
+                    <br><a class="bg-red-400 hover:bg-blue-400 text-white px-3 mt-2 inline-block py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-red-400" href="{{ route('showBookingRequestDetails', [$activeContract->book_request_id]) }}">Details</a>
                 </div>
             </li>
             @endforeach
@@ -74,17 +72,21 @@
             <!-- Repeat this list item for each request -->
             @foreach ($pendingContracts as $pendingContract)
             <li class="flex items-start space-x-4 border-b border-gray-300 py-8">
-                <a class="w-12 h-12 rounded-full"  href="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($pendingContract->email))) }}?s=1024"><img src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($pendingContract->email))) }}?s=200" alt="{{ $pendingContract->name }}" class=""> </a>
+                <a class="w-12 h-12 rounded-full"  href="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($pendingContract->email))) }}?s=1024"><img src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($pendingContract->email))) }}?s=200" alt="{{ $pendingContract->name }}"></a>
                 <div class="flex-grow">
                     <div class="flex items-center justify-between">
                         <h3 class="text-lg font-semibold">{{ $pendingContract->name }}</h3>
-                        <button class="bg-red-400 hover:bg-red-600 text-white px-3 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400">Accept</button>
                     </div>
                     <small>Contract ID: {{ $pendingContract->id }}</small>
                     <br><small class="text-gray-500">Phone: {{ $pendingContract->phone_number }}</small>
                     <br><small class="text-gray-500">Email: {{ $pendingContract->email }}</small>
+
                     <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-2">{{ $pendingContract->driver_request_amount }} TAKA</span>
                     <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-1">{{ $pendingContract->journeyDate }} || {{ $pendingContract->journeyTime }}</span>
+
+                    <br><button class="bg-red-400 hover:bg-blue-400 text-white px-3 py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-red-400">Accept</button>
+                    <a class="bg-red-400 hover:bg-blue-400 text-white px-3 mt-2 inline-block py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-red-400" href="{{ route('showBookingRequestDetails', [$pendingContract->book_request_id]) }}">Details</a>
+
                     <p class="font-bold py-2"><a class="text-blue-400" href="{{ route('showBookingRequestDetails', [$pendingContract->book_request_id]) }}">{{ $pendingContract->pickup }} >> {{ $pendingContract->destination }}</a></p>
                     <p class="text-gray-500">Journey Description: {{ $pendingContract->journeyDetails }}</p>
                 </div>
@@ -101,21 +103,18 @@
         <h2 class="text-2xl mb-4 border-b border-red-400 text-red-400 font-extrabold">No Response</h2>
         <ul class="space-y-4">
             <!-- Repeat this list item for each request -->
-            @foreach ($pendingContracts as $pendingContract)
+            @foreach ($noContracts as $noContract)
             <li class="flex items-start space-x-4 border-b border-gray-300 py-8">
-                <a class="w-12 h-12 rounded-full"  href="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($pendingContract->email))) }}?s=1024"><img src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($pendingContract->email))) }}?s=200" alt="{{ $pendingContract->name }}" class=""> </a>
+                <a class="w-12 h-12 rounded-full"  href="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($noContract->email))) }}?s=1024"><img src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($noContract->email))) }}?s=200" alt="{{ $noContract->name }}" class=""> </a>
                 <div class="flex-grow">
                     <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-semibold">{{ $pendingContract->name }}</h3>
-                        <button class="bg-red-400 hover:bg-red-600 text-white px-3 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400">Accept</button>
+                        <h3 class="text-lg font-semibold">{{ $noContract->name }}</h3>
                     </div>
-                    <small>Contract ID: {{ $pendingContract->id }}</small>
-                    <br><small class="text-gray-500">Phone: {{ $pendingContract->phone_number }}</small>
-                    <br><small class="text-gray-500">Email: {{ $pendingContract->email }}</small>
-                    <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-2">{{ $pendingContract->driver_request_amount }} TAKA</span>
-                    <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-1">{{ $pendingContract->journeyDate }} || {{ $pendingContract->journeyTime }}</span>
-                    <p class="font-bold py-2"><a class="text-blue-400" href="{{ route('showBookingRequestDetails', [$pendingContract->book_request_id]) }}">{{ $pendingContract->pickup }} >> {{ $pendingContract->destination }}</a></p>
-                    <p class="text-gray-500">Journey Description: {{ $pendingContract->journeyDetails }}</p>
+                    <small>Contract ID: {{ $noContract->id }}</small>
+                    <br><small class="text-gray-500">Phone: {{ $noContract->phone_number }}</small>
+                    <br><small class="text-gray-500">Email: {{ $noContract->email }}</small>
+                    <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-2">{{ $noContract->driver_request_amount }} TAKA</span>
+                    <br><a class="bg-red-400 hover:bg-blue-400 text-white px-3 mt-2 inline-block py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-red-400" href="{{ route('showBookingRequestDetails', [$noContract->book_request_id]) }}">{{ $noContract->pickup }} Details {{ $noContract->destination }}</a>
                 </div>
             </li>
             @endforeach
