@@ -23,12 +23,39 @@ class DriverController extends Controller
         // Assuming you have a logged-in user and can access their ID via Auth or any other method.
         $loggedInUserId = auth()->user()->id;
 
-        // Retrieve contracts with the specified conditions.
-        $contracts = Contract::where('driver_user_id', $loggedInUserId)
-                            ->where('status', 2)
-                            ->get();
+
+        $pendingContracts = Contract::where('driver_user_id', $loggedInUserId)
+        ->where('status', 2)
+        ->leftJoin('users', 'users.id', '=', 'contracts.requester_user_id')
+        ->leftJoin('book_requests', function ($join) {
+            $join->on('book_requests.user_id', '=', 'contracts.requester_user_id')
+                ->whereColumn('book_requests.contracted_id', '=', 'contracts.id');
+        })
+        ->select(
+            'contracts.id',
+
+            'users.name',
+            'users.phone_number',
+            'users.email',
+
+            'book_requests.pickup',
+            'book_requests.destination',
+            'book_requests.journeyDate',
+            'book_requests.journeyTime',
+            'book_requests.personCount',
+            'book_requests.journeyDetails',
+
+
+            'contracts.book_request_id',
+            'contracts.driver_request_amount',
+
+            
+
+        )
+        ->paginate(9);
+
         
-        return view('driver.dashboard', compact('contracts'));
+        return view('driver.dashboard', compact('pendingContracts'));
     }
 
     public function create()
