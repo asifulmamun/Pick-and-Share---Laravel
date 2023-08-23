@@ -1,6 +1,3 @@
-{{-- msg --}}
-@include('component.sesionMsg');
-
 {{-- STEP Counter --}}
 <section class="text-gray-600 body-font">
     <div class="container px-5 py-10 mx-auto flex flex-wrap flex-col">

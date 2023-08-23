@@ -7,5 +7,8 @@
 
 {{-- Main Content --}}
 @section('main')
-@include('content.welcomMain')
+{{-- msg --}}
+@include('component.sesionMsg');
+{{-- welcome content --}}
+@include('content.welcomeMain')
 @endsection
