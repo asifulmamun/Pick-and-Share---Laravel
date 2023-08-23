@@ -10,6 +10,9 @@
 {{-- Main Content --}}
 @section('main')
 
+{{-- msg --}}
+@include('component.sesionMsg')
+
 {{-- Personal Info --}}
 <div class="flex justify-center mt-20">
     <div class="bg-white shadow-md rounded-lg p-8">
@@ -54,7 +57,7 @@
                     <small>Contract ID: {{ $activeContract->id }}</small>
                     <br><small class="text-gray-500">Phone: {{ $activeContract->phone_number }}</small>
                     <br><small class="text-gray-500">Email: {{ $activeContract->email }}</small>
-                    <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-2">{{ $activeContract->driver_request_amount }} TAKA</span>
+                    <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-2">{{ $activeContract->contract_amount }} <del>{{ $activeContract->driver_request_amount }}</del> TK</span>
                     <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-1">{{ $activeContract->journeyDate }} || {{ $activeContract->journeyTime }}</span>
                     <br><a class="bg-red-400 hover:bg-blue-400 text-white px-3 mt-2 inline-block py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-red-400" href="{{ route('showBookingRequestDetails', [$activeContract->book_request_id]) }}">Details</a>
                 </div>
@@ -83,12 +86,16 @@
 
                     <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-2">{{ $pendingContract->driver_request_amount }} TAKA</span>
                     <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-1">{{ $pendingContract->journeyDate }} || {{ $pendingContract->journeyTime }}</span>
-
-                    <br><button class="bg-red-400 hover:bg-blue-400 text-white px-3 py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-red-400">Accept</button>
-                    <a class="bg-red-400 hover:bg-blue-400 text-white px-3 mt-2 inline-block py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-red-400" href="{{ route('showBookingRequestDetails', [$pendingContract->book_request_id]) }}">Details</a>
-
                     <p class="font-bold py-2"><a class="text-blue-400" href="{{ route('showBookingRequestDetails', [$pendingContract->book_request_id]) }}">{{ $pendingContract->pickup }} >> {{ $pendingContract->destination }}</a></p>
                     <p class="text-gray-500">Journey Description: {{ $pendingContract->journeyDetails }}</p>
+                
+                    <form class="mt-4" action="{{ route('driver.contractAccept') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="contractID" value="{{ $pendingContract->id }}">
+                        <label class="text-gray-700" for="contractAmount">Contract Amount* (BDT)</label>
+                        <input name="contractAmount" type="number" id="contractAmount" value="{{ (int)$pendingContract->driver_request_amount }}">
+                        <button type="submit" class="inline bg-red-400 hover:bg-blue-400 text-white px-3 mt-2 py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-red-400">Accept</button>
+                    </form>
                 </div>
             </li>
             @endforeach

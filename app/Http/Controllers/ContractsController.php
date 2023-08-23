@@ -61,4 +61,39 @@ class ContractsController extends Controller
             
         }
     }
+
+    public function contractAcceptByDriver(Request $request)
+    {
+
+        // VAR
+        $contractID = $request->contractID;
+        $contractAmount = $request->contractAmount;
+        $loggedUserId = auth()->id();
+
+        // Checking Booking Info and (This Booking Requested By LOGGED USER or NOT)
+        $contract = Contract::
+        where('id', $contractID)
+        ->where('driver_user_id', $loggedUserId)
+        ->where('status', 2)
+        ->select('id', 'driver_user_id')
+        ->first();
+
+
+        if($contract){
+            
+            $crud = Contract::where('id', $contractID)->first();
+
+            if ($crud) {
+                $crud->status = 1;
+                $crud->contract_amount = (int)$contractAmount;
+                $crud->save();
+            }
+            
+            return redirect()->back()->with('msg', 'Contracted amount ' . $contractAmount . ' TAKA');
+        }else{
+            return redirect()->back()->with('msg', 'Request Not Accepted.');
+        }
+
+
+    }
 }

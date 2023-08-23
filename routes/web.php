@@ -52,6 +52,9 @@ Route::prefix('driver')->middleware(['auth', 'isDriver'])->group(function(){
     
     // apply job/bid
     Route::post('apply-contract', [ContractsController::class, 'createContract'])->name('driver.applyContract');
+
+    // Contract Accept by Driver
+    Route::post('accept-contract', [ContractsController::class, 'contractAcceptByDriver'])->name('driver.contractAccept');
     
 });
  // apply for driver profile
