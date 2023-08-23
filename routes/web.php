@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\BookCarController;
+use App\Http\Controllers\ContractsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DriverController;
 
@@ -50,7 +51,7 @@ Route::prefix('driver')->middleware(['auth', 'isDriver'])->group(function(){
     Route::get('profile-status-request', [DriverController::class, 'updateProfileStatusRequest'])->name('driver.profile.update.status.request');
     
     // apply job/bid
-    Route::post('apply-contract', [App\Http\Controllers\ContractsController::class, 'createContract'])->name('driver.applyContract');
+    Route::post('apply-contract', [ContractsController::class, 'createContract'])->name('driver.applyContract');
     
 });
  // apply for driver profile

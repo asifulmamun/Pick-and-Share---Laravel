@@ -4,19 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Driver;
+use App\Models\Contract;
 use App\Models\User;
 use Illuminate\Contracts\Session\Session;
 
 class DriverController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
         // if ther driver doesn't exist any profile
         $user_id = auth()->id(); // Get the currently logged-in user's id
         $driver = Driver::where('user_id', $user_id)->first();
@@ -24,27 +20,22 @@ class DriverController extends Controller
             return redirect()->route('driver.apply'); // Replace 'driver.apply' with your actual route name
         }
 
+        // Assuming you have a logged-in user and can access their ID via Auth or any other method.
+        $loggedInUserId = auth()->user()->id;
+
+        // Retrieve contracts with the specified conditions.
+        $contracts = Contract::where('driver_user_id', $loggedInUserId)
+                            ->where('status', 2)
+                            ->get();
         
-        echo 'You have already for apply driver profile';
-        echo  'this is the dashboard index method';
+        return view('driver.dashboard', compact('contracts'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
 
@@ -83,12 +74,6 @@ class DriverController extends Controller
         // return redirect()->route('driver.profile'); // Redirect after successful creation
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
@@ -136,25 +121,12 @@ class DriverController extends Controller
     }
 
 
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request)
     {
         $user_id = auth()->id(); // Get the currently logged-in user's id
@@ -195,12 +167,7 @@ class DriverController extends Controller
         return redirect()->back()->with('msg', 'Your request for Account activation has been sent successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //

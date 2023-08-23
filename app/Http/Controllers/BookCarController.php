@@ -178,6 +178,12 @@ class BookCarController extends Controller
             $bookRequest = BookRequest::findOrFail($bookingID);
             $bookRequest->contracted_id = $contractInfo->id;
             $bookRequest->save();
+
+            // Update contracts.status
+            $contracts = Contract::findOrFail($contractInfo->id);
+            $contracts->status = 2;
+            $contracts->save();
+
             return redirect()->back()->with('msg', 'Contract Requst sended successfully, for ' . $contractInfo->driver_request_amount . ' TAKA, Contracted ID: ' . $contractInfo->id . ', Driver ID: ' . $contractInfo->driver_user_id);
         }
 
