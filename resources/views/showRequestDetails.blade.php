@@ -191,14 +191,20 @@
                         </div>
                     </div>
 
-                    {{-- Requester/Proposal Sender Will show this --}}
-                    @if ($bookingRequest->user_id == auth()->user()->id OR $allContract->driver_user_id == auth()->user()->id )
+                    @auth                    
+                        {{-- Requester/Proposal Sender Will show this --}}
+                        @if ($bookingRequest->user_id == auth()->user()->id OR $allContract->driver_user_id == auth()->user()->id )
                         <div>{{ $allContract->proposal }}</div>
-                    @endif
+                        @endif
+                        {{-- /Requester/Proposal Sender Will show this --}}
 
-                    @if ($bookingRequest->user_id == auth()->user()->id )
+                        {{-- Request Accept BTN --}}
+                        @if ($bookingRequest->user_id == auth()->user()->id )
                         <button class="bg-red-400 hover:bg-blue-400 text-white px-4 py-2 rounded">Accept</button>
-                    @endif
+                        @endif
+                        {{-- /Request Accept BTN --}}
+                    @endauth
+
                 </li>
             @endforeach
             {{ $allContracts->links() }}
