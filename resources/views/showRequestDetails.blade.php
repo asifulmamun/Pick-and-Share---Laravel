@@ -170,6 +170,14 @@
     {{-- Apply JOB/BID --}}
 
 
+    {{-- Contracted --}}
+
+    {{-- /Contracted --}}
+    
+
+    {{ print($contracted) }}
+
+
     {{-- Contracts --}}
     <div class="bg-gray-100 p-4">
         <div class="flex items-center justify-center mb-6">
@@ -186,7 +194,7 @@
                             <div class="font-semibold text-red-400">{{ $allContract->name }}</div>
                             <small>Contract ID: {{ $allContract->id }}</small>
                             <div>Request Amount:
-                                @if ($allContract->contract_amount > 0)
+                                @if ($allContract->contract_amount > 0 && $allContract->contract_amount < $allContract->driver_request_amount)
                                     <span class="font-bold text-red-400">{{ $allContract->contract_amount }}</span>
                                     &nbsp;<del>{{ $allContract->driver_request_amount }}</del>&nbsp;TAKA
                                 @else
@@ -199,7 +207,7 @@
                         </div>
                     </div>
 
-                    @auth                    
+                    @auth
                         {{-- Requester/Proposal Sender Will show this --}}
                         @if ($bookingRequest->user_id == auth()->user()->id OR $allContract->driver_user_id == auth()->user()->id )
                         <div>{{ $allContract->proposal }}</div>
@@ -207,13 +215,16 @@
                         {{-- /Requester/Proposal Sender Will show this --}}
 
                         {{-- Request Accept BTN --}}
-                        @if ($bookingRequest->user_id == auth()->user()->id )
+                        @if ($bookingRequest->user_id == auth()->user()->id /* && $allContract->status == 0  */)
                             <form action="{{ route('bookingReqAcceptByRequester') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="bookingID" value="{{ $bookingRequest->id }}">
                                 <input type="hidden" name="driverID" value="{{ $allContract->driver_user_id }}">
                                 <button type="submit" class="bg-red-400 hover:bg-blue-400 text-white px-4 py-2 rounded">Agree</button>
                             </form>
+                        
+                        @elseif($allContract->status)
+                        
                         @endif
                         {{-- /Request Accept BTN --}}
                     @endauth

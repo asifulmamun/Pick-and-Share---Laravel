@@ -101,6 +101,7 @@ class BookCarController extends Controller
             'book_requests.personCount',
             'book_requests.journeyDetails',
             'book_requests.created_at',
+            'book_requests.contracted_id',
         )
         ->find($id);
 
@@ -124,24 +125,42 @@ class BookCarController extends Controller
         ->join('users', 'users.id', '=', 'contracts.driver_user_id')
         ->select(
             'users.name', 'users.email', 'users.phone_number',
-            'contracts.id', 'contracts.driver_user_id', 'contracts.driver_request_amount', 'contracts.proposal', 'contracts.contract_amount'
+            'contracts.id', 'contracts.driver_user_id', 'contracts.driver_request_amount', 'contracts.proposal', 'contracts.contract_amount', 'contracts.status',
         )
         ->groupBy('contracts.id')
         ->orderByDesc('contracts.id') // Order by contracts.id in descending order
         ->paginate(10);
         
-        // total contracts count
-        $allContractsCount = Contract::where('book_request_id', $id)
-        ->count();
 
-        // Retrive Contract Details
-        $contract = Contract::where('book_request_id', $id)
-        ->where('driver_user_id', $driver_id)
-        ->select('id', 'requester_user_id', 'driver_user_id', 'driver_request_amount',)
+            // total contracts count
+            $allContractsCount = Contract::where('book_request_id', $id)
+            ->count();
+
+            // Retrive Contract Details
+            $contract = Contract::where('book_request_id', $id)
+            ->where('driver_user_id', $driver_id)
+            ->select('id', 'requester_user_id', 'driver_user_id', 'driver_request_amount',)
+            ->first();
+
+        // Contracted
+        $contracted = Contract::where('book_request_id', $id)
+        ->where('id', $bookingRequest->contracted_id)
+        ->select(
+            'id',
+            'book_request_id',
+            'requester_user_id',
+            'driver_user_id',
+            'driver_request_amount',
+            'contract_amount',
+            'currency',
+            'contracted_date',
+            'status',
+            'proposal',
+        )
         ->first();
 
 
-        return view('showRequestDetails', compact('bookingRequest', 'driver', 'allContracts', 'allContractsCount', 'contract'));
+        return view('showRequestDetails', compact('bookingRequest', 'driver', 'allContracts', 'allContractsCount', 'contract', 'contracted'));
 
     }
 
@@ -160,34 +179,85 @@ class BookCarController extends Controller
         // Checking Booking Info and (This Booking Requested By LOGGED USER or NOT)
         $booking = BookRequest::where('id', $bookingID)
         ->where('user_id', $loggedUserId)
-        ->select('id', 'user_id')
+        ->select('id', 'user_id', 'contracted_id')
         ->first();
 
-        if($booking->id == $bookingID){
+
+        // if request accept before this 0 have another contracted id/ then make shure this contracted id is acccepted or not, if accepted status is 1 then not permission another request accept
+        if($booking->contracted_id !== 0){
             
-            // checking Driver was sended job req or not
-            $contractInfo = Contract::
-            where('book_request_id', $booking->id)
-            ->where('requester_user_id', $loggedUserId)
-            ->where('driver_user_id', $driverID)
-            ->select('id', 'driver_user_id', 'driver_request_amount')
+            // Contracted check
+            $contracted = Contract::where('id', $booking->contracted_id )
+            // ->where('status', 1)
+            ->select('id', 'contract_amount', 'status',)
             ->first();
 
+            // if book_request.contracted_id exist any id and this contracted_id status is 1 means already contracted confirmd/ else doing make another request
+            if($contracted->status == 1){
 
-            // Update the contracted_id field
-            $bookRequest = BookRequest::findOrFail($bookingID);
-            $bookRequest->contracted_id = $contractInfo->id;
-            $bookRequest->save();
+                return redirect()->back()->with('msg', 'You have already contracted with ' . $contracted->contract_amount . ' TAKA, Contract ID: ' . $contracted->id . '. If you want to cancel this please contact with Administrator.');
+            
+            } else{
+                
+                // Accepting
+                if($booking->id == $bookingID){
+                
+                    // checking Driver was sended job req or not
+                    $contractInfo = Contract::
+                    where('book_request_id', $booking->id)
+                    ->where('requester_user_id', $loggedUserId)
+                    ->where('driver_user_id', $driverID)
+                    ->select('id', 'driver_user_id', 'driver_request_amount')
+                    ->first();
+    
+                    // Update the contracted_id field
+                    $bookRequest = BookRequest::findOrFail($bookingID);
+                    $bookRequest->contracted_id = $contractInfo->id;
+                    $bookRequest->save();
+    
+                    // Update contracts.status
+                    $contracts = Contract::findOrFail($contractInfo->id);
+                    $contracts->status = 2;
+                    $contracts->save();
+    
+                    return redirect()->back()->with('msg', 'Contract Requst sended successfully, for ' . $contractInfo->driver_request_amount . ' TAKA, Contracted ID: ' . $contractInfo->id . ', Driver ID: ' . $contractInfo->driver_user_id);
+                } // Accepting
+                
 
-            // Update contracts.status
-            $contracts = Contract::findOrFail($contractInfo->id);
-            $contracts->status = 2;
-            $contracts->save();
+            }
+        }
+        
+        elseif($booking->contracted_id == 0){
+                            
+            // Accepting
+            if($booking->id == $bookingID){
+            
+                // checking Driver was sended job req or not
+                $contractInfo = Contract::
+                where('book_request_id', $booking->id)
+                ->where('requester_user_id', $loggedUserId)
+                ->where('driver_user_id', $driverID)
+                ->select('id', 'driver_user_id', 'driver_request_amount')
+                ->first();
 
-            return redirect()->back()->with('msg', 'Contract Requst sended successfully, for ' . $contractInfo->driver_request_amount . ' TAKA, Contracted ID: ' . $contractInfo->id . ', Driver ID: ' . $contractInfo->driver_user_id);
+                // Update the contracted_id field
+                $bookRequest = BookRequest::findOrFail($bookingID);
+                $bookRequest->contracted_id = $contractInfo->id;
+                $bookRequest->save();
+
+                // Update contracts.status
+                $contracts = Contract::findOrFail($contractInfo->id);
+                $contracts->status = 2;
+                $contracts->save();
+
+                return redirect()->back()->with('msg', 'Contract Requst sended successfully, for ' . $contractInfo->driver_request_amount . ' TAKA, Contracted ID: ' . $contractInfo->id . ', Driver ID: ' . $contractInfo->driver_user_id);
+            } // Accepting
+                
         }
 
-
+        else{
+            return redirect()->back()->with('msg', 'Your booking request not accepatble');
+        }
     }
 
 
