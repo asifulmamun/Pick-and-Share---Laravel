@@ -54,11 +54,8 @@
                     <div class="flex items-center justify-between">
                         <h3 class="text-lg font-semibold">{{ $activeContract->name }}</h3>
                     </div>
-                    <small>Contract ID: {{ $activeContract->id }}</small>
-                    <br><small class="text-gray-500">Phone: {{ $activeContract->phone_number }}</small>
-                    <br><small class="text-gray-500">Email: {{ $activeContract->email }}</small>
+                    <small>Contract ID: {{ $activeContract->id }}<br>Date: {{ $activeContract->contracted_date }}</small>
                     <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-2">{{ $activeContract->contract_amount }} <del>{{ $activeContract->driver_request_amount }}</del> TK</span>
-                    <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-1">{{ $activeContract->journeyDate }} || {{ $activeContract->journeyTime }}</span>
                     <br><a class="bg-red-400 hover:bg-blue-400 text-white px-3 mt-2 inline-block py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-red-400" href="{{ route('showBookingRequestDetails', [$activeContract->book_request_id]) }}">Details</a>
                 </div>
             </li>
@@ -82,9 +79,6 @@
                         <h3 class="text-lg font-semibold">{{ $pendingContract->name }}</h3>
                     </div>
                     <small>Contract ID: {{ $pendingContract->id }}</small>
-                    <br><small class="text-gray-500">Phone: {{ $pendingContract->phone_number }}</small>
-                    <br><small class="text-gray-500">Email: {{ $pendingContract->email }}</small>
-
                     <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-2">{{ $pendingContract->driver_request_amount }} TAKA</span>
                     <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-1">{{ $pendingContract->journeyDate }} || {{ $pendingContract->journeyTime }}</span>
                     <p class="font-bold py-2"><a class="text-blue-400" href="{{ route('showBookingRequestDetails', [$pendingContract->book_request_id]) }}">{{ $pendingContract->pickup }} >> {{ $pendingContract->destination }}</a></p>
@@ -120,8 +114,6 @@
                         <h3 class="text-lg font-semibold">{{ $noContract->name }}</h3>
                     </div>
                     <small>Contract ID: {{ $noContract->id }}</small>
-                    <br><small class="text-gray-500">Phone: {{ $noContract->phone_number }}</small>
-                    <br><small class="text-gray-500">Email: {{ $noContract->email }}</small>
                     <br><span class="text-gray-700 bg-yellow-200 px-2 py-1 font-bold inline-block my-2">{{ $noContract->driver_request_amount }} TAKA</span>
                     <br><a class="bg-red-400 hover:bg-blue-400 text-white px-3 mt-2 inline-block py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-red-400" href="{{ route('showBookingRequestDetails', [$noContract->book_request_id]) }}">{{ $noContract->pickup }} Details {{ $noContract->destination }}</a>
                 </div>

@@ -86,6 +86,7 @@ class ContractsController extends Controller
             if ($crud) {
                 $crud->status = 1;
                 $crud->contract_amount = (int)$contractAmount;
+                $crud->contracted_date = date('Y-m-d');
                 $crud->save();
             }
             

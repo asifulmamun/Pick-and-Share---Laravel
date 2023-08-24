@@ -52,6 +52,7 @@ class DriverController extends Controller
             'contracts.book_request_id',
             'contracts.driver_request_amount',
             'contracts.contract_amount',
+            'contracts.contracted_date',
         )
         ->paginate(6);
 

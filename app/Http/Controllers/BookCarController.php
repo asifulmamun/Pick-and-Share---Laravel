@@ -144,9 +144,9 @@ class BookCarController extends Controller
 
         // Contracted
         $contracted = Contract::where('contracts.book_request_id', $id)
+        ->where('contracts.id', $bookingRequest->contracted_id) // Specify 'contracts.id'
         ->leftJoin('users', 'users.id', '=', 'contracts.driver_user_id')
         ->leftJoin('drivers', 'drivers.user_id', '=', 'contracts.driver_user_id')
-        ->where('contracts.id', $bookingRequest->contracted_id) // Specify 'contracts.id'
         ->select(
 
             // users table
@@ -158,7 +158,8 @@ class BookCarController extends Controller
             'drivers.license_number',
             'drivers.license_expire_date',
             'drivers.date_of_birth',
-            'drivers.status',
+            'drivers.present_address',
+            'drivers.permanent_address',
 
 
             // contracts table
