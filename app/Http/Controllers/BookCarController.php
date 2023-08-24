@@ -143,22 +143,37 @@ class BookCarController extends Controller
             ->first();
 
         // Contracted
-        $contracted = Contract::where('book_request_id', $id)
-        ->where('id', $bookingRequest->contracted_id)
+        $contracted = Contract::where('contracts.book_request_id', $id)
+        ->leftJoin('users', 'users.id', '=', 'contracts.driver_user_id')
+        ->leftJoin('drivers', 'drivers.user_id', '=', 'contracts.driver_user_id')
+        ->where('contracts.id', $bookingRequest->contracted_id) // Specify 'contracts.id'
         ->select(
-            'id',
-            'book_request_id',
-            'requester_user_id',
-            'driver_user_id',
-            'driver_request_amount',
-            'contract_amount',
-            'currency',
-            'contracted_date',
-            'status',
-            'proposal',
+
+            // users table
+            'users.name',
+            'users.email',
+            'users.phone_number',
+
+            // drivers table
+            'drivers.license_number',
+            'drivers.license_expire_date',
+            'drivers.date_of_birth',
+            'drivers.status',
+
+
+            // contracts table
+            'contracts.id',
+            'contracts.book_request_id',
+            'contracts.requester_user_id',
+            'contracts.driver_user_id',
+            'contracts.driver_request_amount',
+            'contracts.contract_amount',
+            'contracts.currency',
+            'contracts.contracted_date',
+            'contracts.status',
+            'contracts.proposal'
         )
         ->first();
-
 
         return view('showRequestDetails', compact('bookingRequest', 'driver', 'allContracts', 'allContractsCount', 'contract', 'contracted'));
 
