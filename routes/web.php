@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DriverController;
 use App\Http\Controllers\BookCarController;
 use App\Http\Controllers\ContractsController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\DriverController;
 
 
 // Public
@@ -64,5 +65,5 @@ Route::post('driver/applied', [DriverController::class, 'store'])->name('driver.
 
 // Admin
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function(){
-    // Route::get('dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 });

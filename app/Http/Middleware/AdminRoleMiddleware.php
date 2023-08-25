@@ -24,21 +24,19 @@ class AdminRoleMiddleware
             // Driver == 2
             // Users == 0
 
-        if(Auth::user()->role == '1'){
-
+            if(Auth::user()->role == '1'){
+                
                 return $next($request);
-
+                
             } else{
 
-                return redirect('/login')->with('msg', 'You are not an Admin');
-
+                return redirect('/dashboard')->with('msg', 'You are not an Admin');
             }
 
         } else{
 
             return redirect('/login')->with('msg', 'You are not a Logged User');
         }
-
 
         return $next($request);
     }
