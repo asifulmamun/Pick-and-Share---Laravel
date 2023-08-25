@@ -1,5 +1,5 @@
 {{-- Apply for driver profile --}}
-@include('component.applyForDriverProfile')
+{{-- @include('component.applyForDriverProfile') --}}
 
 
 <x-jet-form-section submit="updateProfileInformation">
