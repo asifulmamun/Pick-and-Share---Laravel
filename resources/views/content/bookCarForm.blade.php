@@ -85,7 +85,7 @@
                 </svg>
             </div>
             {{-- Pickup --}}
-            <input name="pickup" type="text" id="pickup" value="{{ $_GET['pickup'] }}"
+            <input name="pickup" type="text" id="pickup" value="{{ $_GET['pickup'] ?? '' }}"
                 class="outline-none border-none placeholder:gray-100 text-gray-900 text-sm rounded-lg pl-12 py-4"
                 placeholder="Pick Up Location">
             @error('pickup')
@@ -102,7 +102,7 @@
                 </svg>
             </div>
             {{-- Destination --}}
-            <input name="destination" type="text" id="destination" value="{{ $_GET['destination'] }}"
+            <input name="destination" type="text" id="destination" value="{{ $_GET['destination'] ?? '' }}"
                 class="outline-none border-none placeholder:gray-100 text-gray-900 text-sm rounded-lg pl-12 py-4"
                 placeholder="Destination">
             @error('destination')
@@ -113,7 +113,7 @@
         <div class="relative">
             <span class="absolute top-1 left-12 text-xs text-gray-500 font-bold">Pickup Date</span>
             {{-- Journey Date --}}
-            <input name="journeyDate" value="{{ $_GET['journeyDate'] }}" type="date" id="journeyDate"
+            <input name="journeyDate" value="{{ $_GET['journeyDate'] ?? '' }}" type="date" id="journeyDate"
                 class="outline-none border-none text-gray-500 rounded-lg pl-14 pt-7 pb-4 text-2xl">
             @error('journeyDate')
             <span class="text-red-500 font-bold">{{ $message }}</span>
@@ -123,7 +123,7 @@
         <div class="relative">
             <span class="absolute top-1 left-12 text-xs text-gray-500 font-bold">Chose Estimate Time</span>
             {{-- Journey Time --}}
-            <input name="journeyTime" value="{{ $_GET['journeyTime'] }}" type="time" id="journeyTime"
+            <input name="journeyTime" value="{{ $_GET['journeyTime'] ?? '' }}" type="time" id="journeyTime"
                 class="outline-none border-none text-gray-500 rounded-lg pl-14 pt-7 pb-4 text-2xl">
             @error('journeyTime')
             <span class="text-red-500 font-bold">{{ $message }}</span>
