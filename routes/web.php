@@ -66,4 +66,6 @@ Route::post('driver/applied', [DriverController::class, 'store'])->name('driver.
 // Admin
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function(){
     Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('driver-profile/{id}', [AdminController::class, 'driverProfile'])->name('admin.driverProfile');
+    Route::get('pending-drivers', [AdminController::class, 'pendingDrivers'])->name('admin.pendingDrivers');
 });

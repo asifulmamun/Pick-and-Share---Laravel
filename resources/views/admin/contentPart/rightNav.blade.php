@@ -3,7 +3,7 @@
 </div>
 <ul class="flex-grow w-full">
     <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-    <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+    <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{ route('admin.pendingDrivers') }}">Pending Drivers</a></li>
     <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
     <li class="p-4 hover:bg-gray-700 cursor-pointer"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
 </ul>

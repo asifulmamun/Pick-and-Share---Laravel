@@ -16,26 +16,6 @@ class AdminController extends Controller
     public function index()
     {
 
-
-        // users.role == 2 // Driver    ------- drivers.status == 1 // active
-        $allDrivers = Driver::join('users', 'users.id', '=', 'drivers.user_id')
-        ->select(
-            // Select columns from the users table
-            'users.name', 'users.email', 'users.phone_number',
-    
-            // Select columns from the drivers table
-            'drivers.present_address',
-            'drivers.permanent_address',
-            'drivers.license_number',
-            'drivers.license_expire_date',
-            'drivers.nid', 'drivers.date_of_birth',
-            'drivers.status'
-        )
-        ->orderByDesc('users.updated_at')
-        ->paginate(6);
-        // {{ $allDrivers->links() }}
-
-
         // All User/Included Drivers
         $allUsersCount = User::count();
 
@@ -62,13 +42,60 @@ class AdminController extends Controller
             compact(
                 'allUsersCount',
                 'simpleUsersCount',
-                'allDrivers', 
                 'allActiveDriversCount', 
                 'allPendingDriversCount',
                 'allRequestedForActivationDriversCount'
             )
         );
 
+    }
+
+    public function pendingDrivers(){
+
+
+        // All Pending Drivers
+        $pendingDrivers = Driver::where('status', 2)
+        ->join('users', 'users.id', '=', 'drivers.user_id')
+        ->select(
+            'users.name', 'users.email', 'users.phone_number',
+
+            'drivers.user_id',
+            'drivers.present_address',
+            'drivers.permanent_address',
+            'drivers.license_number',
+            'drivers.license_expire_date',
+            'drivers.nid', 'drivers.date_of_birth',
+            'drivers.status'
+        )
+        ->groupBy('drivers.id')
+        ->orderByDesc('drivers.id') // Order by contracts.id in descending order
+        ->paginate(10);
+
+
+        return view('admin.pendingDrivers', compact('pendingDrivers'));
+
+    }
+
+
+    // Driver Profile by ID
+    public function driverProfile($id){
+
+        $driver = Driver::where('user_id', $id)
+        ->join('users', 'users.id', '=', 'drivers.user_id')
+        ->select(
+            'users.name', 'users.email', 'users.phone_number',
+
+            'drivers.user_id',
+            'drivers.present_address',
+            'drivers.permanent_address',
+            'drivers.license_number',
+            'drivers.license_expire_date',
+            'drivers.nid', 'drivers.date_of_birth',
+            'drivers.status'
+        )
+        ->first();
+
+        return view('driver.profileDetailsByAdmin', compact('driver'));
     }
 
     /**
