@@ -44,14 +44,11 @@
                         <span class="py-2 px-4 bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase">Inactive</span>
                     @endif
                     {{-- Apply for Activation Profile --}}
-                    <a href="" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">ACTIVE</a>
+                    <a href="{{ route('admin.driverProfileActivation', ['id' => $driver->user_id]) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">ACTIVE</a>
                     {{-- /Apply for Activation Profile --}}
                 @endif
                 {{-- /Profile Status --}}
             </p>
-        
-        
-        
         </div>
         <!-- text - end -->
 

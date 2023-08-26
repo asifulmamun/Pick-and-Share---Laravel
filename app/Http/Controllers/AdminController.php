@@ -98,6 +98,23 @@ class AdminController extends Controller
         return view('driver.profileDetailsByAdmin', compact('driver'));
     }
 
+
+    // Driver Profile Activate
+    public function driverProfileActiveByAdmin($id){
+        $user_id = $id;
+        $driver = Driver::where('user_id', $user_id)->first();
+        // without id go to for apply
+        if (!$driver) {
+            return redirect()->back()->with('msg', 'There are no driver profile.'); // Replace 'driver.apply' with your actual route name
+        }
+
+        $crud = $driver;
+        $crud->status = '1';
+        $crud->save();
+        // Session::flash('msg', 'Your information updated successfully');
+        return redirect()->back()->with('msg', 'This Driver profile has been activated');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
