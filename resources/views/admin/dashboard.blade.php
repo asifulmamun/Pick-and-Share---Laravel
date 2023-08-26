@@ -7,6 +7,13 @@
 
 
 
+{{-- Righ menu class for selected/highlighter --}}
+@section('adminDashboardMenuClass')
+!bg-gray-700
+@endsection
+
+
+
 {{-- Main Content --}}
 @section('main')
 
@@ -18,6 +25,7 @@
     <div class="bg-gray-800 text-white w-64 py-20 flex flex-col items-center">
         @include('admin.contentPart.rightNav')
     </div>
+
 
     <!-- Main Content -->
     <div class="flex-1 p-8">
@@ -49,14 +57,14 @@
                     <!-- stat - start -->
                     <div title="Profile Created also requested for verify and account activation." class="flex flex-col items-center">
                         <div class="text-xl font-bold text-white sm:text-2xl md:text-3xl">{{ $allRequestedForActivationDriversCount }}</div>
-                        <div class="text-sm text-indigo-200 sm:text-base">Requested for Activation</div>
+                        <div class="text-sm text-indigo-200 sm:text-base">Pending Drivers</div>
                     </div>
                     <!-- stat - end -->
 
                     <!-- stat - start -->
                     <div title="Profile Created but Not Requested" class="flex flex-col items-center">
                         <div class="text-xl font-bold text-white sm:text-2xl md:text-3xl">{{ $allPendingDriversCount }}</div>
-                        <div class="text-sm text- text-indigo-200 sm:text-base">Pending Drivers</div>
+                        <div class="text-sm text- text-indigo-200 sm:text-base">In-active Drivers</div>
                     </div>
                     <!-- stat - end -->
 

@@ -68,8 +68,8 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function(){
     Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('driver-profile/{id}', [AdminController::class, 'driverProfile'])->name('admin.driverProfile');
     Route::get('pending-drivers', [AdminController::class, 'pendingDrivers'])->name('admin.pendingDrivers');
+    Route::get('inactive-drivers', [AdminController::class, 'inActiveDrivers'])->name('admin.inActiveDrivers');
+    Route::get('active-drivers', [AdminController::class, 'activeDrivers'])->name('admin.activeDrivers');
     Route::get('drivers-profile-active/{id}', [AdminController::class, 'driverProfileActiveByAdmin'])->name('admin.driverProfileActivation');
-
-    
-
+    Route::get('drivers-profile-in-active/{id}', [AdminController::class, 'driverProfileInActiveByAdmin'])->name('admin.driverProfileInActivation');
 });

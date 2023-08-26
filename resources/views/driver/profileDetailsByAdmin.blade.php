@@ -20,11 +20,6 @@
                 <a href="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($driver->email))) }}?s=1024" target="_blank" class="group-hover:opacity-75 transition-opacity">
                     <img class="w-full h-full" src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($driver->email))) }}?s=200" alt="{{ $driver->name }}" class="w-32 h-32 rounded-full">
                 </a>
-                <div class="hidden group-hover:block absolute -right-30 -top-30 transform bg-gray-800 text-white py-2 px-4 rounded-lg">
-                    <a href="https://gravatar.com/" class="block mx-auto mb-2 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700">
-                        Change Image
-                    </a>
-                </div>
             </div>
             {{-- /Profile Picture --}}
 
