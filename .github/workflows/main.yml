@@ -32,6 +32,12 @@ jobs:
           npm -v
 
 
+          cd /var/www/html
+          git pull
+          composer install
+          npm install && npm run production
+          php artisan migrate
+          php artisan optimize
 
 
 

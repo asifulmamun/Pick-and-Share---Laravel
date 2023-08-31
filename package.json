@@ -8,8 +8,8 @@
         "hot": "mix watch --hot",
         "prod": "npm run production",
         "production": "mix --production",
-        "serve": "clear && php artisan cache:clear && php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan optimize && php artisan optimize:clear && php artisan serve",
-        "clear": "clear && php artisan cache:clear && php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan optimize && php artisan optimize:clear"
+        "serve": "clear && php artisan cache:clear && php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan optimize && php artisan serve",
+        "clear": "clear && php artisan cache:clear && php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan optimize"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",
