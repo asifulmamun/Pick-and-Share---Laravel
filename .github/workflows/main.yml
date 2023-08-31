@@ -15,8 +15,8 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-          # Switch to the user account
-          su - asifulmamun <<EOF
+          # Switch to the user account with password
+          echo ${{ secrets.PASSWORD }} | sudo -S su - asifulmamun <<EOF
           # Install or update NVM
           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
           
@@ -46,7 +46,6 @@ jobs:
           npm install && npm run production
           php artisan migrate
           php artisan optimize:clear
-
 
 
 
