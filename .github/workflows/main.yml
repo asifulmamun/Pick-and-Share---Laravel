@@ -1,5 +1,10 @@
 name: remote ssh command
-on: [push]
+
+on:
+  push:
+    branches:
+      - main  # Replace with your preferred branch
+
 jobs:
 
   build:
@@ -15,4 +20,19 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           cd /var/www/html/
-          npm --version
+
+          # check node version first
+          node -v
+          npm -v
+          
+          # Install Node Version Manager (NVM)
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+          source ~/.bashrc
+
+          # Use NVM to install and switch to Node.js v18.17.1
+          nvm install v18.17.1
+          nvm use v18.17.1
+
+          # Verify Node.js and npm versions
+          node -v
+          npm -v
