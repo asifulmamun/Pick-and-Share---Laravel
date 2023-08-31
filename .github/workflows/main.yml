@@ -13,10 +13,56 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script:
+        script: |
           cd /var/www/html
           git pull
           composer install
           npm install && npm run production
           php artisan migrate
           php artisan optimize:clear
+
+
+
+
+
+
+
+
+NODE UPDATE
+
+# name: remote ssh command
+
+# on:
+#   push:
+#     branches:
+#       - main  # Replace with your preferred branch
+
+# jobs:
+
+#   build:
+#     name: Build
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v2
+
+#     - name: Set up Node.js environment with NVM and execute commands
+#       run: |
+#         sudo su -
+#         @al1998
+#         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+#         export NVM_DIR="$HOME/.nvm"
+#         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+#         [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+#         cd /var/www/html/
+        
+#         # Use NVM to install and switch to Node.js v18.17.1
+#         nvm install v18.17.1
+#         nvm use v18.17.1
+
+#         # Verify Node.js and npm versions
+#         node -v
+#         npm -v
+
+#       shell: bash
