@@ -1,10 +1,11 @@
 name: remote ssh command
 on: [push]
-jobs:
 
+jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+
     steps:
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@v1.0.0
@@ -14,22 +15,37 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
+          # Switch to the user account
+          su - asifulmamun <<EOF
+          # Install or update NVM
           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
           
-          # Use NVM to install and switch to Node.js v18.17.1
+          # Load NVM
+          export NVM_DIR="\$HOME/.nvm"
+          [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
+          [ -s "\$NVM_DIR/bash_completion" ] && \. "\$NVM_DIR/bash_completion"
+          
+          # Install the desired Node.js version
           nvm install v18.17.1
+          
+          # Use the new Node.js version
           nvm use v18.17.1
-
+          
           # Verify Node.js and npm versions
           node -v
           npm -v
-
-          sudo -u asifulmamun bash -c 'cd /var/www/html && git pull && composer install && npm install && npm run production && php artisan migrate && php artisan optimize:clear'
-
-
+          
+          # Exit the user account
+          exit
+          EOF
+          
+          # Continue with other commands after Node.js update
+          cd /var/www/html
+          git pull
+          composer install
+          npm install && npm run production
+          php artisan migrate
+          php artisan optimize:clear
 
 
 
