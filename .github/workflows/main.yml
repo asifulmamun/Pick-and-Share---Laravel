@@ -38,7 +38,7 @@ jobs:
         php artisan migrate
         php artisan optimize:clear
 
-      shell: bash
+        shell: bash
 
 
 
