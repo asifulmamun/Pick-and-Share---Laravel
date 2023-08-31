@@ -27,14 +27,8 @@ jobs:
           node -v
           npm -v
 
-          su - asifulmamun
+          sudo -u asifulmamun bash -c 'cd /var/www/html && git pull && composer install && npm install && npm run production && php artisan migrate && php artisan optimize:clear'
 
-          cd /var/www/html
-          git pull
-          composer install
-          npm install && npm run production
-          php artisan migrate
-          php artisan optimize:clear
 
 
 
