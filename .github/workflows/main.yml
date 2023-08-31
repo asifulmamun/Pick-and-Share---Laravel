@@ -16,8 +16,6 @@ jobs:
 
     - name: Set up Node.js environment with NVM and execute commands
       run: |
-        sudo su -
-        @al1998
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
         export NVM_DIR="$HOME/.nvm"
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
@@ -39,6 +37,9 @@ jobs:
         npm install && npm run production
         php artisan migrate
         php artisan optimize:clear
+
+      shell: bash
+
 
 
 
