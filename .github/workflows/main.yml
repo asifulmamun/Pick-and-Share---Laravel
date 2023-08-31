@@ -14,28 +14,21 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Node.js environment with NVM
+    - name: Set up Node.js environment with NVM and execute commands
       run: |
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
         export NVM_DIR="$HOME/.nvm"
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
         [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+        cd /var/www/html/
+        
+        # Use NVM to install and switch to Node.js v18.17.1
+        nvm install v18.17.1
+        nvm use v18.17.1
+
+        # Verify Node.js and npm versions
+        node -v
+        npm -v
+
       shell: bash
-
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        script: |
-          cd /var/www/html/
-
-          # Use NVM to install and switch to Node.js v18.17.1
-          nvm install v18.17.1
-          nvm use v18.17.1
-
-          # Verify Node.js and npm versions
-          node -v
-          npm -v
