@@ -14,6 +14,25 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
+          sudo su -
+          @al1998
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+          cd /var/www/html/
+          
+          # Use NVM to install and switch to Node.js v18.17.1
+          nvm install v18.17.1
+          nvm use v18.17.1
+
+          # Verify Node.js and npm versions
+          node -v
+          npm -v
+
+          shell: bash
+
           cd /var/www/html
           git pull
           composer install
