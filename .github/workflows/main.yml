@@ -13,11 +13,10 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-        script: |
+        script:
           cd /var/www/html
           git pull
           composer install
-          npm install
-          npm run production
+          npm install && npm run production
           php artisan migrate
-          npm run clear          
+          php artisan optimize:clear
