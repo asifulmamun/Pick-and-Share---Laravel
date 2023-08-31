@@ -15,7 +15,7 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           sudo su -
-          @al1998
+            @al1998
           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
           export NVM_DIR="$HOME/.nvm"
           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
@@ -29,7 +29,7 @@ jobs:
           node -v
           npm -v
 
-          exit
+          su - asifulmamun
 
           cd /var/www/html
           git pull
