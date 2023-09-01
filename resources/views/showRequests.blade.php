@@ -23,9 +23,9 @@
 
 
     <div class="container px-5 mx-auto">
-        <div class="grid grid-cols-12">
+        <div class="grid grid-cols-1 md:grid-cols-3">
             @foreach($bookingRequests as $bookingRequest)
-            <div class="space-x-2 p-4 col-span-1 md:col-span-4">
+            <div class="space-x-2 p-4">
                 <div class="h-full bg-white border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
                     <svg class="my-5 h-auto" style="width: -webkit-fill-available;" xmlns="http://www.w3.org/2000/svg"
                         data-name="Layer 1" width="918.58215" height="432.0506" viewBox="0 0 918.58215 432.0506"

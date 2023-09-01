@@ -1,5 +1,5 @@
 {{-- STEP Counter --}}
-<section class="text-gray-600 body-font pt-20">
+<section class="text-gray-600 body-font">
     <div class="container px-5 py-10 mx-auto flex flex-wrap flex-col">
         <div class="flex mx-auto flex-wrap">
             <a href="{{ url('/') }}"
