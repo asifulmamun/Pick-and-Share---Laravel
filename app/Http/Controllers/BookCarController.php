@@ -142,9 +142,11 @@ class BookCarController extends Controller
             ->select('id', 'requester_user_id', 'driver_user_id', 'driver_request_amount',)
             ->first();
 
+
         // Contracted
         $contracted = Contract::where('contracts.book_request_id', $id)
-        ->where('contracts.id', $bookingRequest->contracted_id) // Specify 'contracts.id'
+        ->where('contracts.id', $bookingRequest->contracted_id)
+        ->where('contracts.status', 1)
         ->leftJoin('users', 'users.id', '=', 'contracts.driver_user_id')
         ->leftJoin('drivers', 'drivers.user_id', '=', 'contracts.driver_user_id')
         ->select(
@@ -176,7 +178,52 @@ class BookCarController extends Controller
         )
         ->first();
 
-        return view('showRequestDetails', compact('bookingRequest', 'driver', 'allContracts', 'allContractsCount', 'contract', 'contracted'));
+        // Contracted
+        // $contracted = Contract::where('contracts.book_request_id', $id)
+        // ->where('contracts.id', $bookingRequest->contracted_id) // Specify 'contracts.id'
+        // // ->where('contracts.status', 1) // Specify 'contracts.id'
+        // ->leftJoin('users', 'users.id', '=', 'contracts.driver_user_id')
+        // ->leftJoin('drivers', 'drivers.user_id', '=', 'contracts.driver_user_id')
+        // ->select(
+
+        //     // users table
+        //     'users.name',
+        //     'users.email',
+        //     'users.phone_number',
+
+        //     // drivers table
+        //     'drivers.license_number',
+        //     'drivers.license_expire_date',
+        //     'drivers.date_of_birth',
+        //     'drivers.present_address',
+        //     'drivers.permanent_address',
+
+
+        //     // contracts table
+        //     'contracts.id',
+        //     'contracts.book_request_id',
+        //     'contracts.requester_user_id',
+        //     'contracts.driver_user_id',
+        //     'contracts.driver_request_amount',
+        //     'contracts.contract_amount',
+        //     'contracts.currency',
+        //     'contracts.contracted_date',
+        //     'contracts.status',
+        //     'contracts.proposal'
+        // )
+        // ->first();
+        
+
+        return view(
+            'showRequestDetails',
+            compact('bookingRequest',
+            'driver',
+            'allContracts',
+            'allContractsCount',
+            'contract',
+            // 'isContracted',
+            'contracted'
+        ));
 
     }
 

@@ -71,8 +71,13 @@
 {{-- Booking Results --}}
 
 
+{{-- If contracted apply system off --}}
+@if (!isset($contracted->status))
+{{-- @if ($contracted->status != 1) --}}
+
+
 {{-- Apply JOB/BID --}}
-@if (isset($driver))
+@isset($driver)
 
 {{-- DRIVER --}}
 @if ($bookingRequest->user_id == auth()->user()->id )
@@ -182,8 +187,12 @@
     </div>
 </div>
 {{-- /GUEST/LOGGED USER --}}
-@endif
+@endisset
 {{-- Apply JOB/BID --}}
+
+{{-- @endif --}}
+@endif
+{{-- /If contracted apply system off --}}
 
 
 {{-- Contracted --}}
@@ -369,7 +378,8 @@
 
 
 
-{{-- Contracts --}}
+
+{{-- ALL Contracts --}}
 <div class="bg-gray-100 p-4">
     <div class="flex items-center justify-center mb-6">
         <h2 class="text-2xl font-bold text-red-400">Applied Results:
@@ -415,19 +425,28 @@
                 <button type="submit" class="bg-red-400 hover:bg-blue-400 text-white px-4 py-2 rounded">Agree</button>
             </form>
 
+
             @elseif($bookingRequest->user_id == auth()->user()->id && $allContract->status == 2)
+                @isset($contracted->status)    
+                @if ($contracted->status !== 1)
                 <button class="bg-red-400 hover:bg-blue-400 text-white px-4 py-2 rounded">Request Sended</button>
+                @endif
+                @endisset
             @endif
+
+
             @endauth
-            @if($allContract->status == 1)
+            @isset($contracted->status)
+            @if ($allContract->driver_user_id == $contracted->driver_user_id)
             <button class="bg-blue-400 text-white px-4 py-2 rounded">Contracted</button>
             @endif
+            @endisset
         </li>
         @endforeach
         {{ $allContracts->links() }}
     </ul>
 </div>
-{{-- /Contracts --}}
+{{-- /ALL Contracts --}}
 
 <div class="text-center my-8">
     <a href="{{ route('showBookingRequestDetails', ['id' => $bookingRequest->id-1]) }}"
