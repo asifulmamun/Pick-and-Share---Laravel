@@ -33,6 +33,7 @@ jobs:
 
 
           cd /var/www/html
+          git reset --hard
           git pull
           composer install
           npm install && npm run production
