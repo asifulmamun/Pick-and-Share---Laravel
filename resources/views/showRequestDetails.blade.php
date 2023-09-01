@@ -71,10 +71,7 @@
 {{-- Booking Results --}}
 
 
-{{-- If contracted apply system off --}}
-@if (!isset($contracted->status))
-{{-- @if ($contracted->status != 1) --}}
-
+@if (!isset($contracted->status)){{-- If contracted apply system off --}}
 
 {{-- Apply JOB/BID --}}
 @isset($driver)
@@ -190,9 +187,7 @@
 @endisset
 {{-- Apply JOB/BID --}}
 
-{{-- @endif --}}
-@endif
-{{-- /If contracted apply system off --}}
+@endif {{-- /If contracted apply system off --}}
 
 
 {{-- Contracted --}}
@@ -411,28 +406,28 @@
 
             @auth
             {{-- Requester/Proposal Sender Will show this --}}
-            @if ($bookingRequest->user_id == auth()->user()->id OR $allContract->driver_user_id == auth()->user()->id )
+            @if ($bookingRequest->user_id == auth()->user()->id OR $allContract->driver_user_id == auth()->user()->id)
             <div>{{ $allContract->proposal }}</div>
             @endif
             {{-- /Requester/Proposal Sender Will show this --}}
 
+
             {{-- Request Accept BTN --}}
-            @if ($bookingRequest->user_id == auth()->user()->id && $allContract->status == 0)
-            <form action="{{ route('bookingReqAcceptByRequester') }}" method="POST">
-                @csrf
-                <input type="hidden" name="bookingID" value="{{ $bookingRequest->id }}">
-                <input type="hidden" name="driverID" value="{{ $allContract->driver_user_id }}">
-                <button type="submit" class="bg-red-400 hover:bg-blue-400 text-white px-4 py-2 rounded">Agree</button>
-            </form>
-
-
-            @elseif($bookingRequest->user_id == auth()->user()->id && $allContract->status == 2)
-                @isset($contracted->status)    
-                @if ($contracted->status !== 1)
-                <button class="bg-red-400 hover:bg-blue-400 text-white px-4 py-2 rounded">Request Sended</button>
+            @if ($bookingRequest->user_id == auth()->user()->id && !isset($contracted->status))
+                @if ($allContract->status == 0)
+                <form action="{{ route('bookingReqAcceptByRequester') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="bookingID" value="{{ $bookingRequest->id }}">
+                    <input type="hidden" name="driverID" value="{{ $allContract->driver_user_id }}">
+                    <button type="submit" class="bg-red-400 hover:bg-blue-400 text-white px-4 py-2 rounded">Agree</button>
+                </form>
                 @endif
-                @endisset
+
+                @if($allContract->status == 2)
+                    <button class="bg-blue-400 hover:bg-red-400 text-white px-4 py-2 rounded">Request Sended</button>
+                @endif
             @endif
+            {{-- /Request Accept BTN --}}
 
 
             @endauth
