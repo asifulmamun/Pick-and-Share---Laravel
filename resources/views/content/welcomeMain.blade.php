@@ -1,5 +1,5 @@
 {{-- STEP Counter --}}
-<section class="text-gray-600 body-font">
+<section class="text-gray-600 body-font pt-20">
     <div class="container px-5 py-10 mx-auto flex flex-wrap flex-col">
         <div class="flex mx-auto flex-wrap">
             <a href="{{ url('/') }}"
@@ -25,16 +25,16 @@
 <!-- Search Section -->
 <section class="search space-y-4 md:px-36 md:py-20 bg-no-repeat"
     style="background-image: url('./img/search_sectino_bg.svg'); background-position: 65% 100%;">
-    <h1 class="text-4xl font-extrabold">Car Hire – Search, Compare & Save</h1>
-    <ul class="features flex text-sm space-x-3">
-        <li><i><svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <h1 class="text-xl pl-4 md:pl-0 md:text-4xl font-semibold md:font-extrabold">Car Hire – Search, Compare & Save</h1>
+    <ul class="features flex flex-col md:flex-row md:space-x-3 text-sm pl-4 md:pl-0">
+        <li class="pt-2"><i><svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M10.1115 0C4.52704 0 0 4.52704 0 10.1115C0 15.6959 4.52704 20.2229 10.1115 20.2229C15.6959 20.2229 20.2229 15.6959 20.2229 10.1115C20.2229 4.52704 15.6959 0 10.1115 0ZM10.1115 1.95705C14.6181 1.95705 18.2658 5.60415 18.2658 10.1115C18.2658 14.6181 14.6188 18.2658 10.1115 18.2658C5.60484 18.2658 1.95705 14.6188 1.95705 10.1115C1.95705 5.60484 5.60415 1.95705 10.1115 1.95705ZM15.8278 7.2683L14.909 6.34204C14.7187 6.15021 14.4089 6.14894 14.2171 6.33927L8.45391 12.0562L6.01607 9.59854C5.82579 9.40671 5.516 9.40544 5.32417 9.59573L4.39787 10.5146C4.20604 10.7048 4.20477 11.0146 4.3951 11.2065L8.09642 14.9378C8.2867 15.1296 8.59649 15.1309 8.78832 14.9406L15.8251 7.96024C16.0169 7.76992 16.0181 7.46013 15.8278 7.2683Z"
                         fill="#6C63FF" />
                 </svg></i>
-            <span class="pl-0.5">Free cancellations on most bookings</span>
+            <span class="pl-2">Free cancellations on most bookings</span>
         </li>
-        <li class=""><i><svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <li class="pt-2"><i><svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M10.1115 0C4.52704 0 0 4.52704 0 10.1115C0 15.6959 4.52704 20.2229 10.1115 20.2229C15.6959 20.2229 20.2229 15.6959 20.2229 10.1115C20.2229 4.52704 15.6959 0 10.1115 0ZM10.1115 1.95705C14.6181 1.95705 18.2658 5.60415 18.2658 10.1115C18.2658 14.6181 14.6188 18.2658 10.1115 18.2658C5.60484 18.2658 1.95705 14.6188 1.95705 10.1115C1.95705 5.60484 5.60415 1.95705 10.1115 1.95705ZM15.8278 7.2683L14.909 6.34204C14.7187 6.15021 14.4089 6.14894 14.2171 6.33927L8.45391 12.0562L6.01607 9.59854C5.82579 9.40671 5.516 9.40544 5.32417 9.59573L4.39787 10.5146C4.20604 10.7048 4.20477 11.0146 4.3951 11.2065L8.09642 14.9378C8.2867 15.1296 8.59649 15.1309 8.78832 14.9406L15.8251 7.96024C16.0169 7.76992 16.0181 7.46013 15.8278 7.2683Z"
                         fill="#6C63FF" />
@@ -44,7 +44,7 @@
     </ul>
 
     <form id="search_form" action="{{ route('book') }}" method="GET"
-        class="grid grid-cols-5 gap-3 rounded-md bg-yellow-400 py-4 px-4 shadow-md mix-blend-multiply">
+        class="grid grid-cols-1 md:grid-cols-5 gap-3 rounded-md bg-yellow-400 py-4 px-4 shadow-md mix-blend-multiply">
         @csrf
         <div class="relative">
             <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
@@ -128,10 +128,10 @@
 <section class="grid grid-cols-12 md:px-36 md:py-20">
 
     <!-- Quick Choice -->
-    <div class="col-span-5 bg-no-repeat"
+    <div class="col-span-12 md:col-span-5 bg-no-repeat"
         style="background-image: url('./img/quick_choice_bg.svg'); background-position: 0% 0%;">
-        <h2 class="font-extrabold text-lg">Quick Choice</h2>
-        <div class="w-fit px-6 py-3 mt-6 border border-solid rounded-2xl border-gray-500">
+        <h2 class="font-extrabold text-lg text-center md:text-left pt-8 md:pt-4">Quick Choice</h2>
+        <div class="w-fit px-6 py-3 mt-6 mx-auto md:mx-0 border border-solid rounded-2xl border-gray-500">
             {{-- Requests --}}
             @if($bookingRequests->count() > 0)
                 @foreach($bookingRequests as $bookingRequest)
@@ -153,7 +153,7 @@
     <!-- /Quick Choice -->
 
     <!-- Features -->
-    <div class="col-span-7 pt-8 bg-no-repeat"
+    <div class="col-span-12 md:col-span-7 pt-8 bg-no-repeat"
         style="background-image: url('./img/features_bg_car.svg'); background-position: 100% 50%; background-size: contain;">
         <!-- Feature - 1 -->
         <div class="flex p-3">

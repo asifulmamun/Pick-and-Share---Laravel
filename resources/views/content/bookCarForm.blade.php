@@ -137,7 +137,7 @@
             car for
             Long Drive or Rent A CAR.</p>
 
-        <input id="search_submit" type="submit" type="butto" value="SUBMIT REQUEST FOR CAR"
+        <input id="search_submit" type="submit" value="SUBMIT"
             class="rounded-lg bg-red-400 hover:bg-blue-400 text-white cursor-pointer font-bold text-2xl transition-all ease-in-out delay-150 duration-300">
 
     </section>
