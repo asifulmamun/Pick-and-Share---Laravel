@@ -7,12 +7,17 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\BookCarController;
 use App\Http\Controllers\ContractsController;
-
+use App\Http\Controllers\PagesController;
 
 // Public
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/show-requests', [BookCarController::class, 'index'])->name('showBookingRequests');
 Route::get('/booking-details/{id}', [BookCarController::class, 'showBookingRequestDetails'])->name('showBookingRequestDetails');
+
+// Public Pages
+Route::get('/terms', [PagesController::class, 'terms'])->name('terms');
+Route::get('/policy', [PagesController::class, 'policy'])->name('policy');
+
 
 
 // Logged users
@@ -72,4 +77,8 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function(){
     Route::get('active-drivers', [AdminController::class, 'activeDrivers'])->name('admin.activeDrivers');
     Route::get('drivers-profile-active/{id}', [AdminController::class, 'driverProfileActiveByAdmin'])->name('admin.driverProfileActivation');
     Route::get('drivers-profile-in-active/{id}', [AdminController::class, 'driverProfileInActiveByAdmin'])->name('admin.driverProfileInActivation');
+    Route::get('contracts', [AdminController::class, 'contractsAdmin'])->name('admin.contracts');
+    Route::get('contracted', [AdminController::class, 'contractedAdmin'])->name('admin.contracted');
+    
+
 });

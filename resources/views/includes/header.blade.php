@@ -9,19 +9,16 @@
       <div class="hidden items-center justify-between w-full md:flex md:w-auto md:order-1" id="navbar-user">
         <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
           <li>
-            <a href="{{ url('/') }}" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0" aria-current="page">Home</a>
+            <a href="{{ url('/') }}" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-gray-900 md:p-0" aria-current="page">Home</a>
           </li>
           <li>
-            <a href="{{ url('/') }}" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:active:text-blue-700 md:focus:text-blue-700 md:p-0">About</a>
+            <a href="{{ route('showBookingRequests') }}" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Show Requests</a>
           </li>
           <li>
-            <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Services</a>
+            <a href="{{ route('book') }}" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Request For Book</a>
           </li>
           <li>
-            <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Pricing</a>
-          </li>
-          <li>
-            <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Contact</a>
+            <a href="https://asifulmamun.info.bd" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Contact</a>
           </li>
         </ul>
       </div>
@@ -29,6 +26,9 @@
       <div class="flex items-center md:order-2 relative">
         {{-- Logged User --}}
         @auth
+          @if (auth()->user()->role == 2)
+            {{ $pendingContractsCount ?? ''}} {{-- if found in driver pending any submitted request to book --}}
+          @endif
         <button type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
           <span class="sr-only">Open user menu</span>
           <img class="w-8 h-8 rounded-full" src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim(auth()->user()->email))) }}?s=200" alt="{{ auth()->user()->name }}">
@@ -36,7 +36,7 @@
         <!-- Dropdown menu -->
         <div class="hidden absolute top-5 right-0 z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow" id="user-dropdown">
           <div class="px-4 py-3">
-            <a href="{{ route('profile.show') }}" class="block text-sm text-gray-900">{{ Auth::user()->name }}</a>
+            <a href="{{ route('profile.show') }}" class="block text-sm text-gray-900">{{ Auth::user()->name }}&nbsp;<span class="font-light text-gray-300">({{ Auth::user()->id }})</span></a>
             <span class="block text-sm  text-gray-500 truncate">{{ Auth::user()->email }}</span>
           </div>
           <ul class="py-2" aria-labelledby="user-menu-button">

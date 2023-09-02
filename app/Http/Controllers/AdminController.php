@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contract;
 use App\Models\Driver;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
 
@@ -171,23 +167,91 @@ class AdminController extends Controller
     }
 
 
-        // Driver Profile Activate
-        public function driverProfileInActiveByAdmin($id){
-            $user_id = $id;
-            $driver = Driver::where('user_id', $user_id)->first();
-            // without id go to for apply
-            if (!$driver) {
-                return redirect()->back()->with('msg', 'There are no driver profile.'); // Replace 'driver.apply' with your actual route name
-            }
-    
-            $crud = $driver;
-            $crud->status = '0';
-            $crud->save();
-            // Session::flash('msg', 'Your information updated successfully');
-            return redirect()->back()->with('msg', 'This Driver profile has been in-activated');
+    // Driver Profile In Active
+    public function driverProfileInActiveByAdmin($id){
+        $user_id = $id;
+        $driver = Driver::where('user_id', $user_id)->first();
+        // without id go to for apply
+        if (!$driver) {
+            return redirect()->back()->with('msg', 'There are no driver profile.'); // Replace 'driver.apply' with your actual route name
         }
-    
 
+        $crud = $driver;
+        $crud->status = '0';
+        $crud->save();
+        // Session::flash('msg', 'Your information updated successfully');
+        return redirect()->back()->with('msg', 'This Driver profile has been in-activated');
+    }
+
+
+    // All Contracts
+    public function contractsAdmin(){
+        
+        // All Pending Drivers
+        $allContracts = Contract::
+        // join('users', 'users.id', '=', 'contracts.requester_user_id')
+        leftJoin('users', 'users.id', '=', 'contracts.requester_user_id')
+        ->leftJoin('book_requests', 'book_requests.id', '=', 'contracts.book_request_id')
+
+        // ->where('status', 0)
+        ->select(
+            'users.name', 'users.email', 'users.phone_number',
+
+            'book_requests.pickup',
+            'book_requests.destination',
+
+
+            'contracts.id',
+            'contracts.book_request_id',
+            'contracts.driver_request_amount',
+            'contracts.contract_amount',
+            'contracts.created_at',
+            'contracts.contracted_date',
+            'contracts.status'
+        )
+        ->groupBy('contracts.id')
+        ->orderByDesc('contracts.id') // Order by contracts.id in descending order
+        ->paginate(5);
+
+
+        return view('admin.contractsAdmin', compact('allContracts'));
+    }
+
+
+    // All Contracted
+    public function contractedAdmin(){
+    
+        // All Pending Drivers
+        $allContracts = Contract::
+        // join('users', 'users.id', '=', 'contracts.requester_user_id')
+        leftJoin('users', 'users.id', '=', 'contracts.requester_user_id')
+        ->leftJoin('book_requests', 'book_requests.id', '=', 'contracts.book_request_id')
+        ->where('contracts.status', 1)
+
+        // ->where('status', 0)
+        ->select(
+            'users.name', 'users.email', 'users.phone_number',
+
+            'book_requests.pickup',
+            'book_requests.destination',
+
+
+            'contracts.id',
+            'contracts.book_request_id',
+            'contracts.driver_request_amount',
+            'contracts.contract_amount',
+            'contracts.created_at',
+            'contracts.contracted_date',
+            'contracts.status'
+        )
+        ->groupBy('contracts.id')
+        ->orderByDesc('contracts.id') // Order by contracts.id in descending order
+        ->paginate(5);
+
+
+        return view('admin.contractedAdmin', compact('allContracts'));
+    }
+    
     /**
      * Show the form for creating a new resource.
      *

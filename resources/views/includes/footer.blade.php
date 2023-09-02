@@ -31,17 +31,17 @@
 
             <!-- nav - start -->
             <div>
-                <div class="mb-4 font-bold uppercase tracking-widest text-gray-800">Products</div>
+                <div class="mb-4 font-bold uppercase tracking-widest text-gray-800">Quick Links</div>
 
                 <nav class="flex flex-col gap-4">
                     <div>
-                        <a href="#"
-                            class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Overview</a>
+                        <a href="{{ route('terms') }}"
+                            class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Terms & Conditions</a>
                     </div>
 
                     <div>
-                        <a href="#"
-                            class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Solutions</a>
+                        <a href="{{ route('policy') }}"
+                            class="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600">Privacy & Policies</a>
                     </div>
 
                     <div>

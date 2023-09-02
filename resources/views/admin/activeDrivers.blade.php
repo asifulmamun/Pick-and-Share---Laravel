@@ -19,7 +19,7 @@
 {{-- msg --}}
 @include('component.sesionMsg')
 
-<div class="flex h-screen bg-gray-200">
+<div class="flex bg-gray-200">
     <!-- Side Menu -->
     <div class="bg-gray-800 text-white w-64 py-20 flex flex-col items-center">
         @include('admin.contentPart.rightNav')

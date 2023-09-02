@@ -71,123 +71,124 @@
 {{-- Booking Results --}}
 
 
-@if (!isset($contracted->status)){{-- If contracted apply system off --}}
+@empty($contracted->status) {{-- If contracted apply system off --}}
 
-{{-- Apply JOB/BID --}}
-@isset($driver)
+    {{-- Apply JOB/BID --}}
+    @isset($driver)
+        {{-- DRIVER --}}
+        @if ($bookingRequest->user_id == auth()->user()->id )
+            <div class="bg-white py-6 sm:py-8 lg:py-12">
+                <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
+                    <div class="flex flex-col items-center justify-between gap-4 rounded-lg bg-gray-100 p-4 sm:flex-row md:p-8">
+                        <div>
+                            <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, {{ $driver->name; }}! You can not apply
+                                for this contract.</h2>
+                            <p class="text-gray-600">This is your request, you can see details. </p>
+                        </div>
 
-{{-- DRIVER --}}
-@if ($bookingRequest->user_id == auth()->user()->id )
-<div class="bg-white py-6 sm:py-8 lg:py-12">
-    <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
-        <div class="flex flex-col items-center justify-between gap-4 rounded-lg bg-gray-100 p-4 sm:flex-row md:p-8">
-            <div>
-                <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, {{ $driver->name; }}! You can not apply
-                    for this contract.</h2>
-                <p class="text-gray-600">This is your request, you can see details. </p>
+                        <a href="#"
+                            class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">SEE
+                            DETAILS</a>
+                    </div>
+                </div>
             </div>
+        @elseif ($driver->status == '0')
+            <div class="bg-white py-6 sm:py-8 lg:py-12">
+                <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
+                    <div class="flex flex-col items-center justify-between gap-4 rounded-lg bg-gray-100 p-4 sm:flex-row md:p-8">
+                        <div>
+                            <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, <span
+                                    class="col-span-4 text-red-400 font-bold">{{ $driver->name; }}!</span>&nbsp;You cann't apply for
+                                this contract.</h2>
+                            <p class="text-gray-600">Your profile is not activate yet (Inacvite). Go to for apply from your driver
+                                profile.</p>
+                        </div>
 
-            <a href="#"
-                class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">SEE
-                DETAILS</a>
+                        <a href="{{ route('driver.profile') }}"
+                            class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">Request
+                            for Activation</a>
+                    </div>
+                </div>
+            </div>
+        @elseif ($driver->status == '2')
+            <div class="bg-white py-6 sm:py-8 lg:py-12">
+                <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
+                    <div class="flex flex-col items-center justify-between gap-4 rounded-lg bg-gray-100 p-4 sm:flex-row md:p-8">
+                        <div>
+                            <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, <span
+                                    class="col-span-4 text-red-400 font-bold">{{ $driver->name; }}!</span>&nbsp;You cann't apply for
+                                this contract.</h2>
+                            <p class="text-gray-600">Your profile is not activate yet (Pending). Go to for apply from your driver
+                                profile.</p>
+                        </div>
+
+                        <a href="{{ route('driver.profile') }}"
+                            class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">Request
+                            for Activation</a>
+                    </div>
+                </div>
+            </div>
+        @elseif ($driver->status == '1')
+            <div class="bg-white py-6 sm:py-8 lg:py-12">
+                <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
+                    <div class="grid grid-cols-10 sm:flex-row p-4 md:p-8 items-center justify-between gap-4 rounded-lg bg-gray-100">
+
+                        <div class="col-span-6">
+                            <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, <span
+                                    class="col-span-4 text-red-400 font-bold">{{ $driver->name; }}!</span>&nbsp;You can apply for
+                                this contract.</h2>
+                            <p class="text-gray-600">Enter your bid amount and apply. If your bid amount preferable for
+                                user/requester then the requester will contract with you.</p>
+                        </div>
+
+                        @if (isset($contract->driver_request_amount))
+                        <b class="col-span-4 text-red-400 font-bold text-xl">You have already applied for
+                            {{ $contract->driver_request_amount }} amount.</b>
+                        @else
+                        {{-- APPLY --}}
+                        <form action="{{ route('driver.applyContract') }}" method="POST" class="col-span-4">
+                            @csrf
+                            <input type="hidden" name="book_request_id" value="{{ $bookingRequest->id }}">
+                            <label class="block font-bold text-gray-700" for="proposal">Proposal Details:</label>
+                            <textarea name="proposal" id="proposal" cols="30" rows="5"
+                                placeholder="Hello, I am interested for ride with you and my proposal amount are given also.. etc..">Hello, I am interested for ride with you and my proposal amount are given also.</textarea>
+                            <input name="driver_request_amount" placeholder="Amount" type="text">
+                            @error('driver_request_amount')
+                            <span class="text-red-500 font-bold">{{ $message }}</span>
+                            @enderror
+                            <button type="submit"
+                                class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">Apply</button>
+                        </form>
+                        {{-- /APPLY --}}
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endif
+        {{-- /DRIVER --}}
+    @endisset
+    {{-- Apply JOB/BID --}}
+
+    @guest
+    {{-- GUEST/LOGGED USER --}}
+    <div class="bg-white py-6 sm:py-8 lg:py-12">
+        <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
+            <div class="flex flex-col items-center justify-between gap-4 rounded-lg bg-gray-100 p-4 sm:flex-row md:p-8">
+                <div>
+                    <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">You can not apply for this contract.</h2>
+                    <p class="text-gray-600">You need to apply as a driver.</p>
+                </div>
+
+                <a href="{{ route('driver.profile') }}"
+                    class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">Start
+                    now</a>
+            </div>
         </div>
     </div>
-</div>
-@elseif ($driver->status == '0')
-<div class="bg-white py-6 sm:py-8 lg:py-12">
-    <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
-        <div class="flex flex-col items-center justify-between gap-4 rounded-lg bg-gray-100 p-4 sm:flex-row md:p-8">
-            <div>
-                <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, <span
-                        class="col-span-4 text-red-400 font-bold">{{ $driver->name; }}!</span>&nbsp;You cann't apply for
-                    this contract.</h2>
-                <p class="text-gray-600">Your profile is not activate yet (Inacvite). Go to for apply from your driver
-                    profile.</p>
-            </div>
-
-            <a href="{{ route('driver.profile') }}"
-                class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">Request
-                for Activation</a>
-        </div>
-    </div>
-</div>
-@elseif ($driver->status == '2')
-<div class="bg-white py-6 sm:py-8 lg:py-12">
-    <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
-        <div class="flex flex-col items-center justify-between gap-4 rounded-lg bg-gray-100 p-4 sm:flex-row md:p-8">
-            <div>
-                <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, <span
-                        class="col-span-4 text-red-400 font-bold">{{ $driver->name; }}!</span>&nbsp;You cann't apply for
-                    this contract.</h2>
-                <p class="text-gray-600">Your profile is not activate yet (Pending). Go to for apply from your driver
-                    profile.</p>
-            </div>
-
-            <a href="{{ route('driver.profile') }}"
-                class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">Request
-                for Activation</a>
-        </div>
-    </div>
-</div>
-@elseif ($driver->status == '1')
-<div class="bg-white py-6 sm:py-8 lg:py-12">
-    <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
-        <div class="grid grid-cols-10 sm:flex-row p-4 md:p-8 items-center justify-between gap-4 rounded-lg bg-gray-100">
-
-            <div class="col-span-6">
-                <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">HELLO, <span
-                        class="col-span-4 text-red-400 font-bold">{{ $driver->name; }}!</span>&nbsp;You can apply for
-                    this contract.</h2>
-                <p class="text-gray-600">Enter your bid amount and apply. If your bid amount preferable for
-                    user/requester then the requester will contract with you.</p>
-            </div>
-
-            @if (isset($contract->driver_request_amount))
-            <b class="col-span-4 text-red-400 font-bold text-xl">You have already applied for
-                {{ $contract->driver_request_amount }} amount.</b>
-            @else
-            {{-- APPLY --}}
-            <form action="{{ route('driver.applyContract') }}" method="POST" class="col-span-4">
-                @csrf
-                <input type="hidden" name="book_request_id" value="{{ $bookingRequest->id }}">
-                <label class="block font-bold text-gray-700" for="proposal">Proposal Details:</label>
-                <textarea name="proposal" id="proposal" cols="30" rows="5"
-                    placeholder="Hello, I am interested for ride with you and my proposal amount are given also.. etc..">Hello, I am interested for ride with you and my proposal amount are given also.</textarea>
-                <input name="driver_request_amount" placeholder="Amount" type="text">
-                @error('driver_request_amount')
-                <span class="text-red-500 font-bold">{{ $message }}</span>
-                @enderror
-                <button type="submit"
-                    class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">Apply</button>
-            </form>
-            {{-- /APPLY --}}
-            @endif
-        </div>
-    </div>
-</div>
-@endif
-{{-- /DRIVER --}}
-@else
-{{-- GUEST/LOGGED USER --}}
-<div class="bg-white py-6 sm:py-8 lg:py-12">
-    <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
-        <div class="flex flex-col items-center justify-between gap-4 rounded-lg bg-gray-100 p-4 sm:flex-row md:p-8">
-            <div>
-                <h2 class="text-xl font-bold text-indigo-500 md:text-2xl">You can not apply for this contract.</h2>
-                <p class="text-gray-600">You need to apply as a driver.</p>
-            </div>
-
-            <a href="{{ route('driver.profile') }}"
-                class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">Start
-                now</a>
-        </div>
-    </div>
-</div>
-{{-- /GUEST/LOGGED USER --}}
-@endisset
-{{-- Apply JOB/BID --}}
-
-@endif {{-- /If contracted apply system off --}}
+    {{-- /GUEST/LOGGED USER --}}
+    @endguest
+    
+@endempty {{-- /If contracted apply system off --}}
 
 
 {{-- Contracted --}}
@@ -199,7 +200,7 @@
         <div class="mb-8 md:mb-12">
             <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">Congratulations..! Successfully Contracted..!</h2>
             {{-- if rquester it will be show the CONFIDENTIAL DATA --}}
-            @if ($bookingRequest->user_id == auth()->id() OR $contracted->driver_user_id == auth()->id())
+            @if ($bookingRequest->user_id == auth()->id() OR $contracted->driver_user_id == auth()->id() OR auth()->user()->role == 1)
                 @if ($bookingRequest->user_id == auth()->id())     
                 <p class="mx-auto max-w-screen-md text-center text-gray-500 md:text-lg">Your contracted has been
                     successfully created. You can now contact with Driver and travel with the Driver. Make sure your safety
@@ -339,6 +340,8 @@
                 </table>
 
                 {{-- Rating --}}
+                @auth
+                @if (auth()->user()->role !== 1) {{-- rating avoid admin --}}
                 <h3 class="text-center pt-8 px-6 py-3 bg-gray-50 font-extrabold text-gray-700 text-xl uppercase tracking-wider">Give Feedback</h3><br>
                 <div class="container">
                     <div class="feedback">
@@ -660,6 +663,8 @@
 
                     }
                 </script>
+                @endif {{-- /rating avoid admin --}}
+                @endauth
                 {{-- /Rating --}}
 
                 {{-- /Driver Details --}}
@@ -759,6 +764,7 @@
             @isset($contracted->status)
             @if ($allContract->driver_user_id == $contracted->driver_user_id)
             <button class="bg-blue-400 text-white px-4 py-2 rounded">Contracted</button>
+            <button title="Cancel feature will be coming soon" class="bg-red-400 text-white px-4 py-2 rounded">Cancel</button>
             @endif
             @endisset
         </li>

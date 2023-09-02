@@ -63,6 +63,7 @@ class DriverController extends Controller
         $pendingContracts = Contract::where('driver_user_id', $loggedInUserId)
         ->where('status', 2)
         ->leftJoin('users', 'users.id', '=', 'contracts.requester_user_id')
+        // ->leftJoin('book_requests', 'book_requests.id', '=', 'contracts.book_request_id')
         ->leftJoin('book_requests', function ($join) {
             $join->on('book_requests.user_id', '=', 'contracts.requester_user_id')
                 ->whereColumn('book_requests.contracted_id', '=', 'contracts.id');

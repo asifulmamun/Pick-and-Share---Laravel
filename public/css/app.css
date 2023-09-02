@@ -2095,6 +2095,9 @@ select {
 .font-semibold {
   font-weight: 600;
 }
+.font-light {
+  font-weight: 300;
+}
 .uppercase {
   text-transform: uppercase;
 }
@@ -2220,6 +2223,10 @@ select {
 .text-yellow-500 {
   --tw-text-opacity: 1;
   color: rgb(234 179 8 / var(--tw-text-opacity));
+}
+.text-red-300 {
+  --tw-text-opacity: 1;
+  color: rgb(252 165 165 / var(--tw-text-opacity));
 }
 .underline {
   text-decoration-line: underline;
@@ -3200,6 +3207,11 @@ select {
   .md\:text-blue-700 {
     --tw-text-opacity: 1;
     color: rgb(29 78 216 / var(--tw-text-opacity));
+  }
+
+  .md\:text-gray-900 {
+    --tw-text-opacity: 1;
+    color: rgb(17 24 39 / var(--tw-text-opacity));
   }
 
   .md\:hover\:bg-transparent:hover {
