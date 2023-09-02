@@ -28,6 +28,40 @@
     <!-- Content -->
     <div class="flex-1 p-8">
         <h2 class="text-2xl font-semibold mb-4">Dashboard</h2>
+
+
+        <div class="grid grid-cols-2 gap-6 rounded-lg bg-indigo-500 p-6 md:grid-cols-4 md:gap-8 md:p-8">
+            <!-- stat - start -->
+            <div class="flex flex-col items-center">
+                <div class="text-xl font-bold text-white sm:text-2xl md:text-3xl">01.01.2023</div>
+                <div class="text-sm text-indigo-200 sm:text-base">From</div>
+            </div>
+            <!-- stat - end -->
+
+            <!-- stat - start -->
+            <div class="flex flex-col items-center">
+                <div class="text-xl font-bold text-white sm:text-2xl md:text-3xl">31.01.2023</div>
+                <div class="text-sm text-indigo-200 sm:text-base">To</div>
+            </div>
+
+
+            <!-- stat - start -->
+            <div title="Profile Created also requested for verify and account activation." class="flex flex-col items-center">
+                <div class="text-xl font-bold text-white sm:text-2xl md:text-3xl">{{ intval($totalAmount) }} BDT</div>
+                <div class="text-sm text-indigo-200 sm:text-base">From</div>
+            </div>
+            <!-- stat - end -->
+
+            <!-- stat - start -->
+            <div title="Profile Created but Not Requested" class="flex flex-col items-center">
+                <div class="text-xl font-bold text-white sm:text-2xl md:text-3xl">0</div>
+                <div class="text-sm text- text-indigo-200 sm:text-base">To</div>
+            </div>
+            <!-- stat - end -->
+
+        </div>
+
+
         <div class="bg-white py-6 sm:py-8 lg:py-12">
             <div class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8"> <!-- Tailwind CSS styles for container -->
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg"> <!-- Styling for the containing element -->

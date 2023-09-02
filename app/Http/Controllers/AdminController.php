@@ -223,12 +223,9 @@ class AdminController extends Controller
     
         // All Pending Drivers
         $allContracts = Contract::
-        // join('users', 'users.id', '=', 'contracts.requester_user_id')
         leftJoin('users', 'users.id', '=', 'contracts.requester_user_id')
         ->leftJoin('book_requests', 'book_requests.id', '=', 'contracts.book_request_id')
         ->where('contracts.status', 1)
-
-        // ->where('status', 0)
         ->select(
             'users.name', 'users.email', 'users.phone_number',
 
@@ -248,8 +245,24 @@ class AdminController extends Controller
         ->orderByDesc('contracts.id') // Order by contracts.id in descending order
         ->paginate(5);
 
+        $currentMonth = now()->month; // Get the current month
+        $totalAmount = Contract::
+            where('status', 1)
+            ->whereMonth('created_at', '=', $currentMonth) // Filter by the current month
+            ->sum('contract_amount');
 
-        return view('admin.contractedAdmin', compact('allContracts'));
+
+        // $fromDate = $response->from_date;
+        // $toDate = $response->to_date;
+
+        // $totalAmount = Contract::
+        //     where('status', 1)
+        //     ->whereBetween('contract_date', [$fromDate, $toDate]) // Filter by the contract_date column within the date range
+        //     ->sum('contract_amount');
+
+
+
+        return view('admin.contractedAdmin', compact('allContracts', 'totalAmount'));
     }
     
     /**

@@ -200,7 +200,7 @@
         <div class="mb-8 md:mb-12">
             <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">Congratulations..! Successfully Contracted..!</h2>
             {{-- if rquester it will be show the CONFIDENTIAL DATA --}}
-            @if ($bookingRequest->user_id == auth()->id() OR $contracted->driver_user_id == auth()->id() OR auth()->user()->role == 1)
+            @if ($bookingRequest->user_id == auth()->id() OR $contracted->driver_user_id == auth()->id())
                 @if ($bookingRequest->user_id == auth()->id())     
                 <p class="mx-auto max-w-screen-md text-center text-gray-500 md:text-lg">Your contracted has been
                     successfully created. You can now contact with Driver and travel with the Driver. Make sure your safety
