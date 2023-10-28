@@ -1,41 +1,41 @@
-name: remote ssh command
-on: [push]
-jobs:
+# name: remote ssh command
+# on: [push]
+# jobs:
 
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{ secrets.HOST }}
-        sync: true
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        script_stop: true
-        script: |
+#   build:
+#     name: Build
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: executing remote ssh commands using password
+#       uses: appleboy/ssh-action@v1.0.0
+#       with:
+#         host: ${{ secrets.HOST }}
+#         sync: true
+#         username: ${{ secrets.USERNAME }}
+#         password: ${{ secrets.PASSWORD }}
+#         port: ${{ secrets.PORT }}
+#         script_stop: true
+#         script: |
 
-          # Node Solving
-          node -v
-          npm -v
+#           # Node Solving
+#           node -v
+#           npm -v
 
-          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-          [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-          nvm install v18.17.1
-          nvm use v18.17.1
+#           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+#           export NVM_DIR="$HOME/.nvm"
+#           [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+#           [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+#           nvm install v18.17.1
+#           nvm use v18.17.1
 
-          node -v
-          npm -v
+#           node -v
+#           npm -v
 
 
-          cd /var/www/html
-          git reset --hard
-          git pull
-          composer install
-          npm install && npm run production
-          php artisan migrate
-          php artisan optimize
+#           cd /var/www/html
+#           git reset --hard
+#           git pull
+#           composer install
+#           npm install && npm run production
+#           php artisan migrate
+#           php artisan optimize
